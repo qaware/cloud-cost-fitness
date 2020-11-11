@@ -21,7 +21,7 @@ public class ResponseConverter {
      * @return a time series with the extracted data
      */
     public TimeSeries extractValues(List<ResultByTime> result, String key) {
-        return new TimeSeries().withValues(result.stream()
+        return new TimeSeries().withElements(result.stream()
                 .map(data -> new ValueWithUnit(
                         convertStringToDate(data.timePeriod().start()),
                         convertAmountToDouble(data.total().get(key).amount()),

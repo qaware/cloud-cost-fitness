@@ -6,18 +6,18 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class TimeSeriesSpec extends Specification {
-    TimeSeries values
+    TimeSeries elements
 
     def setup() {
-        values = new TimeSeries().withValues([
+        elements = new TimeSeries().withElements([
                 new ValueWithUnit(getDate("2020-11-09"), 1.0, "USD"),
                 new ValueWithUnit(getDate("2020-11-10"), -99.812341324, "USD")
         ])
     }
 
-    def "converts values nicely to String"() {
-        when: "the values are converted to String"
-        def result = values.toString()
+    def "converts the series nicely to String"() {
+        when: "the elements are converted to String"
+        def result = elements.toString()
 
         then: "it looks nice"
         result == "2020-11-09 : 1.0 USD\n2020-11-10 : -99.81 USD\n"
@@ -25,17 +25,17 @@ class TimeSeriesSpec extends Specification {
 
     def "determines the minimum"() {
         expect: "the minimum is computed correctly"
-        values.min() == values.getElements()[1]
+        elements.min() == elements.getElements()[1]
     }
 
     def "determines the maximum"() {
         expect: "the maximum is computed correctly"
-        values.max() == values.getElements()[0]
+        elements.max() == elements.getElements()[0]
     }
 
     def "determines the average"() {
         when: "the average is computed"
-        def result = values.mean()
+        def result = elements.mean()
 
         then: "the average is computed correctly"
         result.getValue() == -49.406170662d
@@ -46,10 +46,10 @@ class TimeSeriesSpec extends Specification {
 
     def "determines the average if one date is null"() {
         when: "one date is null"
-        values.getElements().get(0).setDate(null)
+        elements.getElements().get(0).setDate(null)
 
         and: "the average is computed"
-        def result = values.mean()
+        def result = elements.mean()
 
         then: "the average is computed correctly"
         result.getValue() == -49.406170662d
@@ -59,7 +59,7 @@ class TimeSeriesSpec extends Specification {
 
     def "throws an exception if the value list is empty when requesting the minimum"() {
         when: "the minimum is requested"
-        values.withValues([]).min()
+        elements.withElements([]).min()
 
         then: "an exception is thrown"
         thrown NoSuchElementException
@@ -67,7 +67,7 @@ class TimeSeriesSpec extends Specification {
 
     def "throws an exception if the value list is empty when requesting the maximum"() {
         when: "the maximum is requested"
-        values.withValues([]).max()
+        elements.withElements([]).max()
 
         then: "an exception is thrown"
         thrown NoSuchElementException
@@ -75,7 +75,7 @@ class TimeSeriesSpec extends Specification {
 
     def "throws an exception if the value list is empty when requesting the average"() {
         when: "the average is requested"
-        values.withValues([]).mean()
+        elements.withElements([]).mean()
 
         then: "an exception is thrown"
         thrown NoSuchElementException
@@ -83,10 +83,10 @@ class TimeSeriesSpec extends Specification {
 
     def "throws an exception if the units do not match when requesting the minimum"() {
         given: "different units"
-        values.getElements().get(1).setUnit("EUR")
+        elements.getElements().get(1).setUnit("EUR")
 
         when: "the minimum is requested"
-        values.min()
+        elements.min()
 
         then: "an exception is thrown"
         thrown ArithmeticException
@@ -94,10 +94,10 @@ class TimeSeriesSpec extends Specification {
 
     def "throws an exception if the units do not match when requesting the maximum"() {
         given: "different units"
-        values.getElements().get(1).setUnit("EUR")
+        elements.getElements().get(1).setUnit("EUR")
 
         when: "the maximum is requested"
-        values.max()
+        elements.max()
 
         then: "an exception is thrown"
         thrown ArithmeticException
@@ -105,10 +105,10 @@ class TimeSeriesSpec extends Specification {
 
     def "throws an exception if the units do not match when requesting the average"() {
         given: "different units"
-        values.getElements().get(1).setUnit("EUR")
+        elements.getElements().get(1).setUnit("EUR")
 
         when: "the average is requested"
-        values.mean()
+        elements.mean()
 
         then: "an exception is thrown"
         thrown IllegalStateException
@@ -116,13 +116,13 @@ class TimeSeriesSpec extends Specification {
 
     def "adds two time series"() {
         given: "a second time series"
-        def other = new TimeSeries().withValues([
+        def other = new TimeSeries().withElements([
                 new ValueWithUnit(getDate("2020-11-09"), 42.0, "USD"),
                 new ValueWithUnit(getDate("2020-11-10"), 3.14, "USD")
         ])
 
         when: "the two series are added"
-        def result = values.add(other)
+        def result = elements.add(other)
 
         then: "they contain the correct data"
         result.getElements().every { it.unit == "USD" }

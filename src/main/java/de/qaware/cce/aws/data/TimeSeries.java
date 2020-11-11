@@ -16,7 +16,7 @@ public class TimeSeries {
      * @param elements list of elements to be inserted
      * @return the time series
      */
-    public TimeSeries withValues(List<ValueWithUnit> elements) {
+    public TimeSeries withElements(List<ValueWithUnit> elements) {
         this.elements = elements;
         return this;
     }
@@ -120,7 +120,7 @@ public class TimeSeries {
         }
 
         TimeSeries sum = new TimeSeries();
-        return sum.withValues(IntStream.range(0, elements.size())
+        return sum.withElements(IntStream.range(0, elements.size())
                 .mapToObj(index -> elements.get(index).add(other.getElements().get(index)))
                 .collect(Collectors.toList()));
     }
