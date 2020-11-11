@@ -65,6 +65,21 @@ class ValueWithUnitSpec extends Specification {
     }
 
     @Unroll
+    def "returns the time interval length correctly"() {
+        given: "a values"
+        def value = new ValueWithUnit(LocalDate.parse("2020-11-09", FORMATTER), LocalDate.parse(dateTo, FORMATTER), 42.0, "USD")
+
+        expect: "the number of days to be extracted correctly"
+        value.getNumDays() == numDays
+
+        where:
+        dateTo       | numDays
+        "2020-11-09" | 1
+        "2020-11-10" | 2
+        "2020-12-01" | 23
+    }
+
+    @Unroll
     def "converts nicely to String"() {
         given: "a value at a given date"
         def dateFrom = LocalDate.parse("2020-11-09", FORMATTER)

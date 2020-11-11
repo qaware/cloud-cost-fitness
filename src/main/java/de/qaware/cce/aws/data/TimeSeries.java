@@ -1,6 +1,12 @@
 package de.qaware.cce.aws.data;
 
+import org.apache.commons.math3.fitting.PolynomialCurveFitter;
+import org.apache.commons.math3.fitting.WeightedObservedPoint;
+
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -8,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TimeSeries {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private List<ValueWithUnit> elements = new ArrayList<>();
 
     /**
@@ -86,7 +93,7 @@ public class TimeSeries {
      */
     public ValueWithUnit sum() {
         if (elements.size() == 0) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("Empty time series");
         } else if (elements.size() == 1) {
             return elements.get(0);
         }
@@ -126,6 +133,36 @@ public class TimeSeries {
     }
 
     /**
+     * Extrapolates the current time series linearly to a date in the future
+     *
+     * @param date the future date to extrapolate to in the format YYYY-MM-DD
+     * @return the extrapolated value
+     * @throws NoSuchElementException if the time series does not contain enough elements
+     * @throws IllegalStateException  if the units of the elements are different
+     */
+    public ValueWithUnit extrapolate(String date) {
+        if (elements.size() < 2) {
+            throw new NoSuchElementException("Time series too short");
+        }
+
+        if (!haveAllSameUnit()) {
+            throw new IllegalStateException("Units do not match");
+        }
+
+        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(1);
+
+        List<WeightedObservedPoint> points = elements.stream()
+                .map(element -> new WeightedObservedPoint(element.getNumDays(), extractDataPoint(element), element.getValue()))
+                .collect(Collectors.toList());
+
+        double[] coefficients = fitter.fit(points);
+
+        LocalDate localDate = LocalDate.parse(date, FORMATTER);
+        double extrapolated = coefficients[0] + coefficients[1] * convertDateToDataPoint(localDate);
+        return new ValueWithUnit(localDate, extrapolated, elements.get(0).getUnit());
+    }
+
+    /**
      * Pretty-prints the time series
      *
      * @return pretty-printed output
@@ -141,5 +178,13 @@ public class TimeSeries {
 
     private boolean haveAllSameUnit() {
         return elements.stream().map(ValueWithUnit::getUnit).collect(Collectors.toSet()).size() == 1;
+    }
+
+    private double extractDataPoint(ValueWithUnit valueWithUnit) {
+        return 0.5 * (convertDateToDataPoint(valueWithUnit.getDateFrom()) + convertDateToDataPoint(valueWithUnit.getDateTo()));
+    }
+
+    private double convertDateToDataPoint(LocalDate date) {
+        return date.atTime(LocalTime.NOON).toEpochSecond(ZoneOffset.UTC);
     }
 }

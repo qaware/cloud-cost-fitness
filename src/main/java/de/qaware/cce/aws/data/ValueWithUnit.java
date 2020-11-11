@@ -2,6 +2,7 @@ package de.qaware.cce.aws.data;
 
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
@@ -68,6 +69,15 @@ public class ValueWithUnit implements Comparable<ValueWithUnit> {
      */
     public LocalDate getDateTo() {
         return dateTo;
+    }
+
+    /**
+     * Returns the length of the time intervals in days
+     *
+     * @return number of days
+     */
+    public int getNumDays() {
+        return Period.between(dateFrom, dateTo).getDays() + 1;
     }
 
     /**

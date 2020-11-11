@@ -1,6 +1,7 @@
 package de.qaware.cce.aws.data
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -127,6 +128,33 @@ class TimeSeriesSpec extends Specification {
         then: "they contain the correct data"
         result.getElements().every { it.unit == "USD" }
         result.getElements().collect { it.value } == [43.0d, -96.672341324]
+    }
+
+    @Unroll
+    def "extrapolates to a future date"() {
+        given: "a time series"
+        def series = new TimeSeries().withElements([
+                new ValueWithUnit(getDate("2020-11-09"), value1, "USD"),
+                new ValueWithUnit(getDate("2020-11-10"), getDate("2020-11-11"), value2, "USD"),
+                new ValueWithUnit(getDate("2020-11-12"), value3, "USD")
+        ])
+
+        when: "the extrapolated value is requested"
+        def extrapolated = series.extrapolate(futureDate)
+
+        then: "the value is correct (and possibly with some round-off errors)"
+        Math.round(extrapolated.value) as double == result
+
+        and: "the unit and date is correct"
+        extrapolated.unit == "USD"
+        extrapolated.dateFrom == extrapolated.dateTo
+        extrapolated.date == getDate(futureDate)
+
+        where:
+        value1 | value2 | value3 | futureDate   | result
+        15.0d  | 15.0d  | 15.0d  | "2020-12-24" | 15.0d
+        10.0d  | 20.0d  | 10.0d  | "2020-12-24" | 15.0d
+        10.0d  | 25.0d  | 40.0d  | "2020-11-12" | 40.0d
     }
 
     LocalDate getDate(String date) {

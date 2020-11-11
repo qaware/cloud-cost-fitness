@@ -12,7 +12,8 @@ class Costs {
         //'Show the costs of all AWS services during last week'()
         //'Show the most expensive instance'()
         //'Show the usage of an instance'()
-        'Show the costs of multiple instances'()
+        //'Show the costs of multiple instances'()
+        'Extrapolate the costs of an instance'()
     }
 
     static def 'Show the most expensive day last month'() {
@@ -53,6 +54,10 @@ class Costs {
         def instanceCosts1 = client.filterFor("pair-int-ignite-0").getInstanceCosts()
         def instanceCosts2 = client.filterFor("pair-int-ignite-1").getInstanceCosts()
         println(instanceCosts1.add(instanceCosts2))
+    }
+
+    static def 'Extrapolate the costs of an instance'() {
+        println(new CloudCostExplorer().filterFor("pair-int-ignite-0").getInstanceCosts().extrapolate("2020-12-06"))
     }
 }
 
