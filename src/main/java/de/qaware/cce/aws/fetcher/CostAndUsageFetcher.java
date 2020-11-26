@@ -2,13 +2,16 @@ package de.qaware.cce.aws.fetcher;
 
 import de.qaware.cce.TimeRange;
 import de.qaware.cce.TimeSeries;
-import de.qaware.cce.aws.Usage;
+import de.qaware.cce.Usage;
 import de.qaware.cce.aws.converter.RequestConverter;
 import de.qaware.cce.aws.converter.ResponseConverter;
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
 import software.amazon.awssdk.services.costexplorer.model.*;
 import software.amazon.awssdk.utils.StringUtils;
 
+/**
+ * Fetcher for the CostAndUsage AWS API
+ */
 public class CostAndUsageFetcher {
     private static final Granularity GRANULARITY = Granularity.DAILY;
     private static final String METRIC_COST = "UnblendedCost";

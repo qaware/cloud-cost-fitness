@@ -3,6 +3,7 @@ package de.qaware.cce.aws;
 import de.qaware.cce.CostExplorer;
 import de.qaware.cce.TimeRange;
 import de.qaware.cce.TimeSeries;
+import de.qaware.cce.Usage;
 import de.qaware.cce.aws.fetcher.CostAndUsageFetcher;
 import de.qaware.cce.aws.fetcher.DimensionalValuesFetcher;
 import de.qaware.cce.aws.fetcher.TagNamesFetcher;
@@ -20,8 +21,8 @@ import java.util.List;
 public class AwsCostExplorer implements CostExplorer {
     private CostExplorerClient costExplorerClient;
     private TimeRange timeRange = TimeRange.LAST_MONTH;
-    private String query;
-    private Usage usage;
+    private String instance;
+    private String service;
 
     public AwsCostExplorer() {
         initCostExplorerClient(System.getProperty("aws.access.key"), System.getProperty("aws.secret.key"));
@@ -47,60 +48,83 @@ public class AwsCostExplorer implements CostExplorer {
         return this;
     }
 
-    public AwsCostExplorer filterFor(String query) {
-        this.query = query;
+    public AwsCostExplorer forInstance(String instance) {
+        this.instance = instance;
         return this;
     }
 
-    public AwsCostExplorer filterFor(Usage usage) {
-        this.usage = usage;
+    public AwsCostExplorer forService(String service) {
+        this.service = service;
         return this;
     }
 
-    public List<String> getInstanceNames() {
+    public AwsCostExplorer forAllInstances() {
+        this.instance = "";
+        return this;
+    }
+
+    public AwsCostExplorer forAllServices() {
+        this.service = "";
+        return this;
+    }
+
+    public List<String> getNames() {
+        if (instance != null) {
+            return getInstances();
+        }
+        if (service != null) {
+            return getServices();
+        }
+        throw new IllegalStateException("Don't know what names to fetch.");
+    }
+
+    private List<String> getInstances() {
         return TagNamesFetcher.withClient(costExplorerClient)
-                .searchFor(query)
+                .searchFor(instance)
                 .during(timeRange)
                 .fetch();
     }
 
-    public List<String> getServices() {
+    private List<String> getServices() {
         return DimensionalValuesFetcher.withClient(costExplorerClient)
-                .searchFor(query)
+                .searchFor(service)
                 .during(timeRange)
                 .fetchServices();
     }
 
-    public List<String> getUsageCategories() {
-        return DimensionalValuesFetcher.withClient(costExplorerClient)
-                .searchFor(query)
-                .during(timeRange)
-                .fetchUsage();
+    public TimeSeries getCosts() {
+        if (instance != null) {
+            return getInstanceCosts();
+        }
+        if (service != null) {
+            return getServiceCosts();
+        }
+        return getTotalCosts();
     }
 
-    public TimeSeries getTotalCosts() {
+    private TimeSeries getTotalCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .during(timeRange)
                 .fetchCost();
     }
 
-    public TimeSeries getServiceCosts() {
+    private TimeSeries getServiceCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
-                .filterByService(query)
+                .filterByService(service)
                 .during(timeRange)
                 .fetchCost();
     }
 
-    public TimeSeries getInstanceCosts() {
+    private TimeSeries getInstanceCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
-                .filterByTagName(query)
+                .filterByTagName(instance)
                 .during(timeRange)
                 .fetchCost();
     }
 
-    public TimeSeries getInstanceUsage() {
+    public TimeSeries getUsage(Usage usage) {
         return CostAndUsageFetcher.withClient(costExplorerClient)
-                .filterByTagName(query)
+                .filterByTagName(instance)
                 .filterByUsage(usage)
                 .during(timeRange)
                 .fetchUsage();

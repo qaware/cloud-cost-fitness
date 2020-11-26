@@ -11,6 +11,9 @@ import software.amazon.awssdk.services.costexplorer.model.GetDimensionValuesResp
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Fetcher for the DimensionalValues AWS API
+ */
 public class DimensionalValuesFetcher {
     private final RequestConverter requestConverter = new RequestConverter();
 
@@ -75,7 +78,7 @@ public class DimensionalValuesFetcher {
                 .dimension(dimension)
                 .timePeriod(requestConverter.createDateInterval(timeRange));
 
-        if (query != null) {
+        if (query != null && query.length() > 0) {
             requestBuilder.searchString(query);
         }
 

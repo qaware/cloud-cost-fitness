@@ -10,6 +10,9 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Converter for responses from the AWS API
+ */
 public class ResponseConverter {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

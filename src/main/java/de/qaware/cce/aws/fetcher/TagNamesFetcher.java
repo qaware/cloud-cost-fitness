@@ -9,6 +9,9 @@ import software.amazon.awssdk.services.costexplorer.model.GetTagsResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Fetcher for the Tags AWS API
+ */
 public class TagNamesFetcher {
     private static final String TAG_NAME = "Name";
     private final RequestConverter requestConverter = new RequestConverter();
@@ -61,7 +64,7 @@ public class TagNamesFetcher {
                 .tagKey(TAG_NAME)
                 .timePeriod(requestConverter.createDateInterval(timeRange));
 
-        if (query != null) {
+        if (query != null && query.length() > 0) {
             requestBuilder.searchString(query);
         }
 

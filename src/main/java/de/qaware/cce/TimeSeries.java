@@ -13,6 +13,9 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Collection of values given at certain times
+ */
 public class TimeSeries {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private List<ValueWithUnit> elements = new ArrayList<>();

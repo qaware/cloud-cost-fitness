@@ -1,6 +1,8 @@
 package de.qaware.cce.aws;
 
-public enum Usage {
+import de.qaware.cce.Usage;
+
+public enum AwsUsage implements Usage {
     DYNAMO_DB_TRANSFER_INTERNET_IN("DDB: Data Transfer - Internet (IN)"),
     DYNAMO_DB_TRANSFER_INTERNET_OUT("DDB: Data Transfer - Internet (Out)"),
     DYNAMO_DB_INDEXED_DATA("DDB: Indexed Data Storage"),
@@ -30,7 +32,7 @@ public enum Usage {
 
     private final String usage;
 
-    Usage(String usage) {
+    AwsUsage(String usage) {
         this.usage = usage;
     }
 

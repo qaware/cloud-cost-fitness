@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Represents a value with its unit and a time range
+ */
 public class ValueWithUnit implements Comparable<ValueWithUnit> {
     private static final int NUMBER_DIGITS_CURRENCY = 2;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");

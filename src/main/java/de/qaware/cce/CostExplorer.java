@@ -1,7 +1,5 @@
 package de.qaware.cce;
 
-import de.qaware.cce.aws.Usage;
-
 import java.util.List;
 
 /**
@@ -12,72 +10,58 @@ public interface CostExplorer {
      * Sets a time range for the request
      *
      * @param timeRange a time range
-     * @return the current instance
+     * @return the current CostExplorer
      */
     CostExplorer during(TimeRange timeRange);
 
     /**
-     * Sets a filter given a search query
+     * Sets a filter for an instance name
      *
-     * @param query a search query
-     * @return the current instance
+     * @param instance an instance name
+     * @return the current CostExplorer
      */
-    CostExplorer filterFor(String query);
+    CostExplorer forInstance(String instance);
 
     /**
-     * Sets a filter for a usage category
+     * Sets a filter for a cloud provider service
      *
-     * @param usage a usage category
-     * @return the current instance
+     * @param service a cloud provider service
+     * @return the current CostExplorer
      */
-    CostExplorer filterFor(Usage usage);
+    CostExplorer forService(String service);
 
     /**
-     * Fetch the names of all instances
+     * Sets a filter for all instances
      *
-     * @return a list of instance names
+     * @return the current CostExplorer
      */
-    List<String> getInstanceNames();
+    CostExplorer forAllInstances();
 
     /**
-     * Fetch a list of all services
+     * Sets a filter for all cloud provider services
      *
-     * @return a list of services
+     * @return the current CostExplorer
      */
-    List<String> getServices();
+    CostExplorer forAllServices();
 
     /**
-     * Fetch a list of usage categories
+     * Fetch the names
      *
-     * @return a list of usage categories
+     * @return a list of names according to the filters
      */
-    List<String> getUsageCategories();
+    List<String> getNames();
 
     /**
-     * Fetch the total costs
+     * Fetch the costs
      *
-     * @return a time series with the total costs
+     * @return a time series containing costs
      */
-    TimeSeries getTotalCosts();
+    TimeSeries getCosts();
 
     /**
-     * Fetch the AWS service costs
+     * Fetch the instance usage
      *
-     * @return a time series with the costs of the service
+     * @return a time series containing usage
      */
-    TimeSeries getServiceCosts();
-
-    /**
-     * Fetch the AWS instance costs
-     *
-     * @return a time series with the costs of the instance
-     */
-    TimeSeries getInstanceCosts();
-
-    /**
-     * Fetch the AWS instance usage
-     *
-     * @return a time series with the usage of the instance
-     */
-    TimeSeries getInstanceUsage();
+    TimeSeries getUsage(Usage usage);
 }

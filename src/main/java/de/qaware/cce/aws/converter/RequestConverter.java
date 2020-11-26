@@ -6,6 +6,9 @@ import software.amazon.awssdk.services.costexplorer.model.DateInterval;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Converter for request towards AWS API
+ */
 public class RequestConverter {
     /**
      * Creates a date interval for the AWS API

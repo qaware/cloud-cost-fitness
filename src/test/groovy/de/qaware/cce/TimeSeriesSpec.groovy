@@ -1,7 +1,5 @@
 package de.qaware.cce
 
-import de.qaware.cce.TimeSeries
-import de.qaware.cce.ValueWithUnit
 import spock.lang.Specification
 import spock.lang.Unroll
 
