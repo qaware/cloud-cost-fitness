@@ -30,6 +30,8 @@ public class RequestConverter {
             case LAST_WEEK:
                 startDateString = startDate.minusDays(7).format(DateTimeFormatter.ISO_DATE);
                 break;
+            case YESTERDAY:
+                startDateString = startDate.minusDays(1).format(DateTimeFormatter.ISO_DATE);
         }
 
         String endDateString = LocalDate.now()

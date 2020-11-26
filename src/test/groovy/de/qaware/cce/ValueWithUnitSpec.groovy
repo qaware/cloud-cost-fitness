@@ -11,9 +11,9 @@ class ValueWithUnitSpec extends Specification {
 
     def "compares values correctly"() {
         given: "two values"
-        def value1 = new ValueWithUnit(null, 100.0, "Birnen")
-        def value2 = new ValueWithUnit(null, 42.0, "Birnen")
-        def value3 = new ValueWithUnit(null, 42.0, "Birnen")
+        def value1 = new ValueWithUnit(100.0, "Birnen")
+        def value2 = new ValueWithUnit(42.0, "Birnen")
+        def value3 = new ValueWithUnit(42.0, "Birnen")
 
         expect: "they are compared as expected"
         value1 > value2
@@ -22,14 +22,27 @@ class ValueWithUnitSpec extends Specification {
 
     def "does not compare values if the units do not match"() {
         given: "two values"
-        def value1 = new ValueWithUnit(null, 42.0, "USD")
-        def value2 = new ValueWithUnit(null, 40.0, "EUR")
+        def value1 = new ValueWithUnit(42.0, "USD")
+        def value2 = new ValueWithUnit(40.0, "EUR")
 
         when: "they are compared"
         value1 < value2
 
         then: "an exception is thrown"
         thrown ArithmeticException
+    }
+
+    def "checks if a value is less than the other"() {
+        given: "two values"
+        def value1 = new ValueWithUnit(100.0, "Birnen")
+        def value2 = new ValueWithUnit(42.0, "Birnen")
+
+        expect: "the correct relation"
+        !value1.lessThan(value2)
+        value2.lessThan(value1)
+        !value2.lessThan(value2)
+        value1.lessThan(101.0)
+        !value1.lessThan(100.0)
     }
 
     def "correctly adds to values"() {

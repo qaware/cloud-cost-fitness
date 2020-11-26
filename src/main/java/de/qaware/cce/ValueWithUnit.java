@@ -19,6 +19,10 @@ public class ValueWithUnit implements Comparable<ValueWithUnit> {
     private double value;
     private String unit;
 
+    public ValueWithUnit(double value, String unit) {
+        this(null, value, unit);
+    }
+
     public ValueWithUnit(LocalDate date, double value, String unit) {
         this(date, date, value, unit);
     }
@@ -135,6 +139,27 @@ public class ValueWithUnit implements Comparable<ValueWithUnit> {
             throw new ArithmeticException("Date intervals do not match");
         }
         return new ValueWithUnit(dateFrom, dateTo, value + other.getValue(), unit);
+    }
+
+    /**
+     * Whether the value of the current instance is less than the given value
+     *
+     * @param value the value to compare with
+     * @return true if less than value
+     */
+    public boolean lessThan(ValueWithUnit value) {
+        return compareTo(value) < 0;
+    }
+
+    /**
+     * Whether the value of the current instance is less than the given value
+     * assuming the same unit
+     *
+     * @param value the value to compare with
+     * @return true if less than value
+     */
+    public boolean lessThan(double value) {
+        return compareTo(new ValueWithUnit(value, unit)) < 0;
     }
 
     /**
