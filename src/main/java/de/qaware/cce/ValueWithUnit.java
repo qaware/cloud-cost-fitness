@@ -1,4 +1,4 @@
-package de.qaware.cce.aws.data;
+package de.qaware.cce;
 
 
 import java.time.LocalDate;

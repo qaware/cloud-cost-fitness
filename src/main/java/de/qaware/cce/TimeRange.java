@@ -1,4 +1,4 @@
-package de.qaware.cce.aws;
+package de.qaware.cce;
 
 public enum TimeRange {
     LAST_MONTH,

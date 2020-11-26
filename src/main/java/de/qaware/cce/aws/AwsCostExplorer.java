@@ -1,6 +1,8 @@
 package de.qaware.cce.aws;
 
-import de.qaware.cce.aws.data.TimeSeries;
+import de.qaware.cce.CostExplorer;
+import de.qaware.cce.TimeRange;
+import de.qaware.cce.TimeSeries;
 import de.qaware.cce.aws.fetcher.CostAndUsageFetcher;
 import de.qaware.cce.aws.fetcher.DimensionalValuesFetcher;
 import de.qaware.cce.aws.fetcher.TagNamesFetcher;
@@ -13,19 +15,19 @@ import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
 import java.util.List;
 
 /**
- * Http client to connect to the AWS API
+ * Collect data from the AWS API
  */
-public class CloudCostExplorer {
+public class AwsCostExplorer implements CostExplorer {
     private CostExplorerClient costExplorerClient;
     private TimeRange timeRange = TimeRange.LAST_MONTH;
     private String query;
     private Usage usage;
 
-    public CloudCostExplorer() {
+    public AwsCostExplorer() {
         initCostExplorerClient(System.getProperty("aws.access.key"), System.getProperty("aws.secret.key"));
     }
 
-    public CloudCostExplorer(String accessKey, String secretKey) {
+    public AwsCostExplorer(String accessKey, String secretKey) {
         initCostExplorerClient(accessKey, secretKey);
     }
 
@@ -40,44 +42,21 @@ public class CloudCostExplorer {
                 .build();
     }
 
-    /**
-     * Sets a time range for the request
-     *
-     * @param timeRange a time range
-     * @return the current instance
-     */
-    public CloudCostExplorer during(TimeRange timeRange) {
+    public AwsCostExplorer during(TimeRange timeRange) {
         this.timeRange = timeRange;
         return this;
     }
 
-    /**
-     * Sets a filter given a search query
-     *
-     * @param query a search query
-     * @return the current instance
-     */
-    public CloudCostExplorer filterFor(String query) {
+    public AwsCostExplorer filterFor(String query) {
         this.query = query;
         return this;
     }
 
-    /**
-     * Sets a filter for a usage category
-     *
-     * @param usage a usage category
-     * @return the current instance
-     */
-    public CloudCostExplorer filterFor(Usage usage) {
+    public AwsCostExplorer filterFor(Usage usage) {
         this.usage = usage;
         return this;
     }
 
-    /**
-     * Fetch the names of the AWS instances
-     *
-     * @return a list of instance names
-     */
     public List<String> getInstanceNames() {
         return TagNamesFetcher.withClient(costExplorerClient)
                 .searchFor(query)
@@ -85,11 +64,6 @@ public class CloudCostExplorer {
                 .fetch();
     }
 
-    /**
-     * Fetch a list of AWS services
-     *
-     * @return a list of services
-     */
     public List<String> getServices() {
         return DimensionalValuesFetcher.withClient(costExplorerClient)
                 .searchFor(query)
@@ -97,11 +71,6 @@ public class CloudCostExplorer {
                 .fetchServices();
     }
 
-    /**
-     * Fetch a list of usage categories
-     *
-     * @return a list of usage categories
-     */
     public List<String> getUsageCategories() {
         return DimensionalValuesFetcher.withClient(costExplorerClient)
                 .searchFor(query)
@@ -109,22 +78,12 @@ public class CloudCostExplorer {
                 .fetchUsage();
     }
 
-    /**
-     * Fetch the total costs
-     *
-     * @return a time series with the total costs
-     */
     public TimeSeries getTotalCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .during(timeRange)
                 .fetchCost();
     }
 
-    /**
-     * Fetch the AWS service costs
-     *
-     * @return a time series with the costs of the AWS service
-     */
     public TimeSeries getServiceCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .filterByService(query)
@@ -132,11 +91,6 @@ public class CloudCostExplorer {
                 .fetchCost();
     }
 
-    /**
-     * Fetch the AWS instance costs
-     *
-     * @return a time series with the costs of the AWS instance
-     */
     public TimeSeries getInstanceCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .filterByTagName(query)
@@ -144,11 +98,6 @@ public class CloudCostExplorer {
                 .fetchCost();
     }
 
-    /**
-     * Fetch the AWS instance usage
-     *
-     * @return a time series with the usage of the AWS instance
-     */
     public TimeSeries getInstanceUsage() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .filterByTagName(query)

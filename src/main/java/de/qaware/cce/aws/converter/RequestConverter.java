@@ -1,6 +1,6 @@
 package de.qaware.cce.aws.converter;
 
-import de.qaware.cce.aws.TimeRange;
+import de.qaware.cce.TimeRange;
 import software.amazon.awssdk.services.costexplorer.model.DateInterval;
 
 import java.time.LocalDate;

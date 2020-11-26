@@ -1,7 +1,7 @@
 package de.qaware.cce.aws.converter;
 
-import de.qaware.cce.aws.data.TimeSeries;
-import de.qaware.cce.aws.data.ValueWithUnit;
+import de.qaware.cce.TimeSeries;
+import de.qaware.cce.ValueWithUnit;
 import software.amazon.awssdk.services.costexplorer.model.ResultByTime;
 
 import java.time.LocalDate;

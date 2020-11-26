@@ -1,6 +1,6 @@
 package de.qaware.cce.aws.converter
 
-import de.qaware.cce.aws.TimeRange
+import de.qaware.cce.TimeRange
 import spock.lang.Specification
 
 class RequestConverterSpec extends Specification {

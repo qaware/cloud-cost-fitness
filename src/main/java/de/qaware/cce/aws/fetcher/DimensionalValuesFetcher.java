@@ -1,6 +1,6 @@
 package de.qaware.cce.aws.fetcher;
 
-import de.qaware.cce.aws.TimeRange;
+import de.qaware.cce.TimeRange;
 import de.qaware.cce.aws.converter.RequestConverter;
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
 import software.amazon.awssdk.services.costexplorer.model.Dimension;

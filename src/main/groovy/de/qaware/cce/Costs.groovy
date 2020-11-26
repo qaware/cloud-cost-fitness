@@ -1,9 +1,9 @@
 package de.qaware.cce
 
-import de.qaware.cce.aws.CloudCostExplorer
 
-import static de.qaware.cce.aws.TimeRange.LAST_SIX_MONTHS
-import static de.qaware.cce.aws.TimeRange.LAST_WEEK
+import static TimeRange.LAST_SIX_MONTHS
+import static TimeRange.LAST_WEEK
+import static de.qaware.cce.CloudProvider.AMAZON_AWS
 import static de.qaware.cce.aws.Usage.EC2_RUNNING_HOURS
 
 class Costs {
@@ -17,12 +17,12 @@ class Costs {
     }
 
     static def 'Show the most expensive day last month'() {
-        def costs = new CloudCostExplorer().getTotalCosts()
+        def costs = CloudCostExplorer.forProvider(AMAZON_AWS).getTotalCosts()
         println("Maximum: " + costs.max())
     }
 
     static def 'Show the costs of all AWS services during last week'() {
-        def client = new CloudCostExplorer()
+        def client = CloudCostExplorer.forProvider(AMAZON_AWS)
         def services = client.getServices()
 
         services.each {service ->
@@ -32,7 +32,7 @@ class Costs {
     }
 
     static def 'Show the most expensive instance'() {
-        def client = new CloudCostExplorer()
+        def client = CloudCostExplorer.forProvider(AMAZON_AWS)
         def instances = client.getInstanceNames()
 
         def costs = [:]
@@ -45,11 +45,11 @@ class Costs {
 
     static def 'Show the usage of an instance'() {
         def instanceName = "pair-int-ignite-0"
-        println(new CloudCostExplorer().filterFor(instanceName).filterFor(EC2_RUNNING_HOURS).during(LAST_WEEK).getInstanceUsage())
+        println(CloudCostExplorer.forProvider(AMAZON_AWS).filterFor(instanceName).filterFor(EC2_RUNNING_HOURS).during(LAST_WEEK).getInstanceUsage())
     }
 
     static def 'Show the costs of multiple instances'() {
-        def client = new CloudCostExplorer()
+        def client = CloudCostExplorer.forProvider(AMAZON_AWS)
 
         def instanceCosts1 = client.filterFor("pair-int-ignite-0").getInstanceCosts()
         def instanceCosts2 = client.filterFor("pair-int-ignite-1").getInstanceCosts()
@@ -57,7 +57,7 @@ class Costs {
     }
 
     static def 'Extrapolate the costs of an instance'() {
-        println(new CloudCostExplorer().filterFor("pair-int-ignite-0").getInstanceCosts().extrapolate("2020-12-06"))
+        println(CloudCostExplorer.forProvider(AMAZON_AWS).filterFor("pair-int-ignite-0").getInstanceCosts().extrapolate("2020-12-06"))
     }
 }
 

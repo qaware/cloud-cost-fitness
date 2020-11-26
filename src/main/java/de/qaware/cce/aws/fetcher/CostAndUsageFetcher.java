@@ -1,10 +1,10 @@
 package de.qaware.cce.aws.fetcher;
 
-import de.qaware.cce.aws.TimeRange;
+import de.qaware.cce.TimeRange;
+import de.qaware.cce.TimeSeries;
 import de.qaware.cce.aws.Usage;
 import de.qaware.cce.aws.converter.RequestConverter;
 import de.qaware.cce.aws.converter.ResponseConverter;
-import de.qaware.cce.aws.data.TimeSeries;
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
 import software.amazon.awssdk.services.costexplorer.model.*;
 import software.amazon.awssdk.utils.StringUtils;

@@ -1,4 +1,4 @@
-package de.qaware.cce.aws.data;
+package de.qaware.cce;
 
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
