@@ -1,24 +1,37 @@
 package de.qaware.cce.aws.converter
 
 import de.qaware.cce.TimeRange
+import software.amazon.awssdk.services.costexplorer.model.DateInterval
 import spock.lang.Specification
+import spock.lang.Unroll
+
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class RequestConverterSpec extends Specification {
     RequestConverter converter = new RequestConverter()
 
-    def "creates a date interval of the past month"() {
-        when: "the date interval is created"
-        def interval = converter.createDateInterval(TimeRange.LAST_MONTH)
+    @Unroll
+    def "creates date intervals correctly"() {
+        given: "a date"
+        def date = parseDate("2020-11-26")
 
-        then: "the interval is one month long"
-        def start = interval.start() =~ /([0-9]{4})-([0-9]{2})-([0-9]{2})/
-        def end = interval.end() =~ /([0-9]{4})-([0-9]{2})-([0-9]{2})/
-        if (end[0][2] == "01") {
-            start[0][1] as int == (end[0][1] as int) - 1
-            start[0][2] == "12"
-        } else {
-            start[0][1] == end[0][1]
-            start[0][2] as int == (end[0][2] as int) - 1
-        }
+        when: "a date interval is created"
+        DateInterval interval = converter.createDateIntervalFrom(timeRange, date)
+
+        then: "the start date is correct"
+        interval.start() == start
+        interval.end() == "2020-11-26"
+
+        where:
+        timeRange                 | start
+        TimeRange.LAST_SIX_MONTHS | "2020-05-26"
+        TimeRange.LAST_MONTH      | "2020-10-26"
+        TimeRange.LAST_WEEK       | "2020-11-19"
+        TimeRange.YESTERDAY       | "2020-11-25"
+    }
+
+    private static LocalDate parseDate(String date) {
+        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }
