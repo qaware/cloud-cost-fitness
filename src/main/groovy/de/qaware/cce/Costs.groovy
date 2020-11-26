@@ -10,8 +10,9 @@ class Costs {
     static void main(String[] args) {
         //'Show the most expensive day last month'()
         //'Show the costs of all AWS services during last week'()
-        //'Show the most expensive instance'()
-        'Show the usage of an instance'()
+        //'Show the costs of some AWS services during last week'()
+        //'Show the most expensive instance in INT'()
+        //'Show the usage of an instance'()
         //'Show the costs of multiple instances'()
         //'Extrapolate the costs of an instance'()
     }
@@ -31,9 +32,19 @@ class Costs {
         }
     }
 
-    static def 'Show the most expensive instance'() {
+    static def 'Show the costs of some AWS services during last week'() {
         def client = CloudCostExplorer.forProvider(AMAZON_AWS)
-        def instances = client.forAllInstances().getNames()
+        def services = client.forService("Amazon Elastic *").getNames()
+
+        services.each {service ->
+            def costs = client.during(LAST_WEEK).forService(service).getCosts()
+            println(service + ": " + costs.sum())
+        }
+    }
+
+    static def 'Show the most expensive instance in INT'() {
+        def client = CloudCostExplorer.forProvider(AMAZON_AWS)
+        def instances = client.forInstance("pair-int-*").getNames()
 
         def costs = [:]
         instances.forEach() {instance ->
