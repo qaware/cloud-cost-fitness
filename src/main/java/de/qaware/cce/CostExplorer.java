@@ -24,7 +24,7 @@ public interface CostExplorer {
 
     /**
      * Sets a filter for an instance name
-     * Wildcards are allowed when calling {@link #getNames()}
+     * Wildcards are allowed when calling {@link #getNames()} or {@link #getCosts()}
      *
      * @param instance an instance name
      * @return the current CostExplorer

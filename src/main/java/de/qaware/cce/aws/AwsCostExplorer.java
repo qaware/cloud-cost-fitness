@@ -114,10 +114,21 @@ public class AwsCostExplorer implements CostExplorer {
     }
 
     private TimeSeries getInstanceCosts() {
-        return CostAndUsageFetcher.withClient(costExplorerClient)
-                .filterByTagName(instance)
-                .during(timeRange)
-                .fetchCost();
+        List<String> tagNames = TagNamesFetcher.withClient(costExplorerClient)
+                    .searchFor(instance)
+                    .during(timeRange)
+                    .fetch();
+
+        TimeSeries timeSeries = new TimeSeries();
+
+        for (String tagName : tagNames) {
+            timeSeries = timeSeries.add(CostAndUsageFetcher.withClient(costExplorerClient)
+                    .filterByTagName(tagName)
+                    .during(timeRange)
+                    .fetchCost());
+        }
+
+        return timeSeries;
     }
 
     public TimeSeries getUsage(Usage usage) {

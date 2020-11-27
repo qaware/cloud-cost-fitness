@@ -72,13 +72,8 @@ class CloudCostFitness extends Specification {
     }
 
     def "checks the costs for ignite last week"() {
-        when: "all ignite instances are fetched"
-        def instances = costExplorer.during(LAST_7_DAYS).forInstance("pair-int-ignite-*").getNames()
-
-        then: "the individual costs are less than a limit"
-        instances.each {
-            assert costExplorer.during(LAST_7_DAYS).forInstance(it).getCosts().sum().lessThan(20.0)
-        }
+        expect: "the total costs of all instances is less than a threshold"
+        costExplorer.during(LAST_7_DAYS).forInstance("pair-int-ignite-*").getCosts().sum().lessThan(80.0)
     }
 
     def "checks that the ignite instances were up all day"() {
