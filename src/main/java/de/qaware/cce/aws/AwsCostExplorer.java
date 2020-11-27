@@ -66,16 +66,6 @@ public class AwsCostExplorer implements CostExplorer {
         return this;
     }
 
-    public AwsCostExplorer forAllInstances() {
-        this.instance = "";
-        return this;
-    }
-
-    public AwsCostExplorer forAllServices() {
-        this.service = "";
-        return this;
-    }
-
     public List<String> getNames() {
         if (instance != null) {
             return getInstances();

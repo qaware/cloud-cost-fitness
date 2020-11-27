@@ -24,6 +24,7 @@ public interface CostExplorer {
 
     /**
      * Sets a filter for an instance name
+     * Wildcards are allowed when calling {@link #getNames()}
      *
      * @param instance an instance name
      * @return the current CostExplorer
@@ -32,25 +33,12 @@ public interface CostExplorer {
 
     /**
      * Sets a filter for a cloud provider service
+     * Wildcards are allowed when calling {@link #getNames()}
      *
      * @param service a cloud provider service
      * @return the current CostExplorer
      */
     CostExplorer forService(String service);
-
-    /**
-     * Sets a filter for all instances
-     *
-     * @return the current CostExplorer
-     */
-    CostExplorer forAllInstances();
-
-    /**
-     * Sets a filter for all cloud provider services
-     *
-     * @return the current CostExplorer
-     */
-    CostExplorer forAllServices();
 
     /**
      * Fetch the names
