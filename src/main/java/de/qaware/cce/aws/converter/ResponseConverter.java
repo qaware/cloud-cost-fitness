@@ -17,6 +17,8 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static de.qaware.cce.ValueWithUnit.DATE_FORMATTER;
+
 /**
  * Converter for responses from the AWS API
  */
@@ -40,7 +42,7 @@ public class ResponseConverter {
 
     private LocalDate convertStringToDate(String date) {
         try {
-            return LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER);
+            return LocalDate.parse(date, DATE_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new IllegalStateException("Failed to convert date string to timestamp", e);
         }

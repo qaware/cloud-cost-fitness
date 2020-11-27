@@ -13,6 +13,8 @@ import spock.lang.Unroll
 
 import java.time.LocalDate
 
+import static de.qaware.cce.ValueWithUnit.DATE_FORMATTER
+
 class ValueWithUnitSpec extends Specification {
     def "compares values correctly"() {
         given: "two values"
@@ -52,7 +54,7 @@ class ValueWithUnitSpec extends Specification {
 
     def "correctly adds to values"() {
         given: "two values"
-        def date = LocalDate.parse("2020-11-09", FORMATTER)
+        def date = LocalDate.parse("2020-11-09", DATE_FORMATTER)
         def value1 = new ValueWithUnit(date, 42.0, "USD")
         def value2 = new ValueWithUnit(date, 40.0, "USD")
 
@@ -66,7 +68,7 @@ class ValueWithUnitSpec extends Specification {
     @Unroll
     def "throws an exception if date or unit does not match when adding to values"() {
         given: "two values"
-        def date1 = LocalDate.parse("2020-11-09", FORMATTER)
+        def date1 = LocalDate.parse("2020-11-09", DATE_FORMATTER)
         def value1 = new ValueWithUnit(date1, 42.0, "USD")
         def value2 = new ValueWithUnit(date2, 40.0, unit2)
 
@@ -77,15 +79,15 @@ class ValueWithUnitSpec extends Specification {
         thrown ArithmeticException
 
         where:
-        date2                                    | unit2
-        null                                     | "USD"
-        LocalDate.parse("2020-11-09", FORMATTER) | "EUR"
+        date2                                         | unit2
+        null                                          | "USD"
+        LocalDate.parse("2020-11-09", DATE_FORMATTER) | "EUR"
     }
 
     @Unroll
     def "returns the time interval length correctly"() {
         given: "a values"
-        def value = new ValueWithUnit(LocalDate.parse("2020-11-09", FORMATTER), LocalDate.parse(dateTo, FORMATTER), 42.0, "USD")
+        def value = new ValueWithUnit(LocalDate.parse("2020-11-09", DATE_FORMATTER), LocalDate.parse(dateTo, DATE_FORMATTER), 42.0, "USD")
 
         expect: "the number of days to be extracted correctly"
         value.getNumDays() == numDays
@@ -100,7 +102,7 @@ class ValueWithUnitSpec extends Specification {
     @Unroll
     def "converts nicely to String"() {
         given: "a value at a given date"
-        def dateFrom = LocalDate.parse("2020-11-09", FORMATTER)
+        def dateFrom = LocalDate.parse("2020-11-09", DATE_FORMATTER)
         def value = new ValueWithUnit(dateFrom, dateFrom.plusDays(numDays), 42.0, "Birnen")
 
         expect: "it is converted to String"

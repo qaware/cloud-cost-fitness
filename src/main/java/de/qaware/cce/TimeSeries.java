@@ -20,6 +20,8 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static de.qaware.cce.ValueWithUnit.DATE_FORMATTER;
+
 /**
  * Collection of values given at certain times
  */
@@ -166,7 +168,7 @@ public class TimeSeries {
 
         double[] coefficients = fitter.fit(points);
 
-        LocalDate localDate = LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER);
+        LocalDate localDate = LocalDate.parse(date, DATE_FORMATTER);
         double extrapolated = coefficients[0] + coefficients[1] * convertDateToDataPoint(localDate);
         return new ValueWithUnit(localDate, extrapolated, elements.get(0).getUnit());
     }
