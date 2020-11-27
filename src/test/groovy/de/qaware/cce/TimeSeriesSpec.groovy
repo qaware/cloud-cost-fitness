@@ -144,6 +144,18 @@ class TimeSeriesSpec extends Specification {
         result.getElements().collect { it.value } == [43.0d, -96.672341324]
     }
 
+    def "adds two time series if one is empty"() {
+        given: "a second empty time series"
+        def other = new TimeSeries()
+
+        when: "the two series are added"
+        def result = other.add(elements)
+
+        then: "they contain the correct data"
+        result.getElements().every { it.unit == "USD" }
+        result.getElements().collect { it.value } == [1.0d, -99.812341324]
+    }
+
     @Unroll
     def "extrapolates to a future date"() {
         given: "a time series"

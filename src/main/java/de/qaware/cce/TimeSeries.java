@@ -133,8 +133,12 @@ public class TimeSeries {
      *                             if the dates of the elements do not match
      */
     public TimeSeries add(TimeSeries other) {
-        if (elements.size() != other.getSize()) {
+        if (elements.size() != other.getSize() && elements.size() > 0) {
             throw new ArithmeticException("Time series lengths do not match");
+        }
+
+        if (elements.size() == 0) {
+            return other;
         }
 
         TimeSeries sum = new TimeSeries();
