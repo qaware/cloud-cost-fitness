@@ -9,11 +9,13 @@
 package de.qaware.cce
 
 import spock.lang.Specification
+import spock.lang.Subject
 import spock.lang.Unroll
 
 import java.time.LocalDate
 
 class TimeSeriesSpec extends Specification {
+    @Subject
     TimeSeries elements
 
     def setup() {
@@ -21,6 +23,11 @@ class TimeSeriesSpec extends Specification {
                 new ValueWithUnit(getDate("2020-11-09"), 1.0, "USD"),
                 new ValueWithUnit(getDate("2020-11-10"), -99.812341324, "USD")
         ])
+    }
+
+    def "returns the number of elements"() {
+        expect: "the number of elements to be correct"
+        elements.size() == 2
     }
 
     def "converts the series nicely to String"() {

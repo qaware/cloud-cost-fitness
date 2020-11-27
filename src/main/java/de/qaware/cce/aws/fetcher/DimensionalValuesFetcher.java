@@ -69,21 +69,8 @@ public class DimensionalValuesFetcher {
      * @return a list of service names
      */
     public List<String> fetchServices() {
-        return fetch(Dimension.SERVICE);
-    }
-
-    /**
-     * Fetch all usage categories given the filters
-     *
-     * @return a list of usage categories
-     */
-    public List<String> fetchUsage() {
-        return fetch(Dimension.USAGE_TYPE_GROUP);
-    }
-
-    private List<String> fetch(Dimension dimension) {
         GetDimensionValuesRequest.Builder requestBuilder = GetDimensionValuesRequest.builder()
-                .dimension(dimension)
+                .dimension(Dimension.SERVICE)
                 .timePeriod(requestConverter.createDateInterval(timeRange));
 
         if (query != null && query.length() > 0) {

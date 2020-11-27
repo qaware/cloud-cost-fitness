@@ -61,7 +61,7 @@ class CloudCostFitness extends Specification {
         name.contains("pair-int-ignite")
     }
 
-    def "checks that the costs for all EC2 instances"() {
+    def "checks the costs of all EC2 instances"() {
         when: "all services related to EC2 are fetched"
         def services = costExplorer.forService("Amazon Elastic *").getNames()
 

@@ -12,15 +12,17 @@ import de.qaware.cce.TimeRange
 import de.qaware.cce.ValueWithUnit
 import software.amazon.awssdk.services.costexplorer.model.DateInterval
 import spock.lang.Specification
+import spock.lang.Subject
 import spock.lang.Unroll
 
 import java.time.LocalDate
 
 class RequestConverterSpec extends Specification {
+    @Subject
     RequestConverter converter = new RequestConverter()
 
     @Unroll
-    def "creates date intervals correctly"() {
+    def "creates date intervals"() {
         given: "a date"
         def date = parseDate("2020-10-10")
 

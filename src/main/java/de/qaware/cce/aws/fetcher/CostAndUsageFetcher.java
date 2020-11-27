@@ -137,6 +137,10 @@ public class CostAndUsageFetcher {
         return fetch(METRIC_USAGE);
     }
 
+    protected Expression getFilter() {
+        return filter;
+    }
+
     private TimeSeries fetch(String metric) {
         GetCostAndUsageRequest.Builder requestBuilder = GetCostAndUsageRequest.builder()
                 .granularity(GRANULARITY)

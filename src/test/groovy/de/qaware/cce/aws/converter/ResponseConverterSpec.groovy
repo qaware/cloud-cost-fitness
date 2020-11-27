@@ -13,8 +13,10 @@ import software.amazon.awssdk.services.costexplorer.model.DateInterval
 import software.amazon.awssdk.services.costexplorer.model.MetricValue
 import software.amazon.awssdk.services.costexplorer.model.ResultByTime
 import spock.lang.Specification
+import spock.lang.Subject
 
 class ResponseConverterSpec extends Specification {
+    @Subject
     ResponseConverter converter = new ResponseConverter()
     List<ResultByTime> resultsByTime
 
@@ -45,7 +47,7 @@ class ResponseConverterSpec extends Specification {
         ]
     }
 
-    def "extracts values with dates correctly"() {
+    def "extracts values with dates"() {
         when: "the converter is invoked"
         def result = converter.extractValues(resultsByTime, "blended")
 

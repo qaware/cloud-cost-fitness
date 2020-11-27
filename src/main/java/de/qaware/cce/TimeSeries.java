@@ -174,6 +174,15 @@ public class TimeSeries {
     }
 
     /**
+     * Returns the number of elements in the time series
+     *
+     * @return the number of elements
+     */
+    public int size() {
+        return elements.size();
+    }
+
+    /**
      * Pretty-prints the time series
      *
      * @return pretty-printed output
