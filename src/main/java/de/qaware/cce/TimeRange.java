@@ -12,8 +12,8 @@ package de.qaware.cce;
  * The time range of the data
  */
 public enum TimeRange {
-    LAST_MONTH,
-    LAST_SIX_MONTHS,
-    LAST_WEEK,
+    LAST_6_MONTHS,
+    LAST_30_DAYS,
+    LAST_7_DAYS,
     YESTERDAY
 }

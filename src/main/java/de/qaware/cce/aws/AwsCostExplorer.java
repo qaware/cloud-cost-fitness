@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class AwsCostExplorer implements CostExplorer {
     private CostExplorerClient costExplorerClient;
-    private TimeRange timeRange = TimeRange.LAST_MONTH;
+    private TimeRange timeRange = TimeRange.LAST_30_DAYS;
     private String instance;
     private String service;
 

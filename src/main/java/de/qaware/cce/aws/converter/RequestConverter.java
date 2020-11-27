@@ -32,21 +32,20 @@ public class RequestConverter {
         String startDateString = "";
 
         switch (timeRange) {
-            case LAST_MONTH:
-                startDateString = fromDate.minusMonths(1).format(DateTimeFormatter.ISO_DATE);
-                break;
-            case LAST_SIX_MONTHS:
+            case LAST_6_MONTHS:
                 startDateString = fromDate.minusMonths(6).format(DateTimeFormatter.ISO_DATE);
                 break;
-            case LAST_WEEK:
+            case LAST_30_DAYS:
+                startDateString = fromDate.minusMonths(1).format(DateTimeFormatter.ISO_DATE);
+                break;
+            case LAST_7_DAYS:
                 startDateString = fromDate.minusDays(7).format(DateTimeFormatter.ISO_DATE);
                 break;
             case YESTERDAY:
                 startDateString = fromDate.minusDays(1).format(DateTimeFormatter.ISO_DATE);
         }
 
-        String endDateString = LocalDate.now()
-                .format(DateTimeFormatter.ISO_DATE);
+        String endDateString = fromDate.format(DateTimeFormatter.ISO_DATE);
         return DateInterval.builder()
                 .start(startDateString)
                 .end(endDateString)

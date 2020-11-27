@@ -33,12 +33,12 @@ class CloudCostFitness extends Specification {
         def day = LocalDate.now().plusDays(30).format(ValueWithUnit.DATE_FORMATTER)
 
         expect: "the extrapolated total costs to be less than a limit"
-        costExplorer.during(LAST_MONTH).getCosts().extrapolate(day).lessThan(100.0)
+        costExplorer.during(LAST_30_DAYS).getCosts().extrapolate(day).lessThan(100.0)
     }
 
     def "checks that the most expensive day is the first day of the month"() {
         when: "all costs are retrieved"
-        def costs = costExplorer.during(LAST_MONTH).getCosts()
+        def costs = costExplorer.during(LAST_30_DAYS).getCosts()
 
         then: "the first day of the month is the most expensive"
         costs.max().getDate().toCalendar().get(Calendar.DAY_OF_MONTH) == 1
@@ -51,7 +51,7 @@ class CloudCostFitness extends Specification {
         and: "the costs are fetched for each of them"
         def costs = [:]
         instances.forEach() {instance ->
-            costs[instance] = costExplorer.forInstance(instance).during(LAST_MONTH).getCosts().sum()
+            costs[instance] = costExplorer.forInstance(instance).during(LAST_30_DAYS).getCosts().sum()
         }
 
         and: "the name of the most expensive instance is extracted"
@@ -67,17 +67,17 @@ class CloudCostFitness extends Specification {
 
         then: "their costs are less than a limit"
         services.each {service ->
-            assert costExplorer.during(LAST_WEEK).forService(service).getCosts().sum().lessThan(200.0)
+            assert costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum().lessThan(200.0)
         }
     }
 
     def "checks the costs for ignite last week"() {
         when: "all ignite instances are fetched"
-        def instances = costExplorer.during(LAST_WEEK).forInstance("pair-int-ignite-*").getNames()
+        def instances = costExplorer.during(LAST_7_DAYS).forInstance("pair-int-ignite-*").getNames()
 
         then: "the individual costs are less than a limit"
         instances.each {
-            assert costExplorer.during(LAST_WEEK).forInstance(it).getCosts().sum().lessThan(20.0)
+            assert costExplorer.during(LAST_7_DAYS).forInstance(it).getCosts().sum().lessThan(20.0)
         }
     }
 

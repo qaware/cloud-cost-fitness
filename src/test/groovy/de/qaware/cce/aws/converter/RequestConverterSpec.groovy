@@ -22,21 +22,21 @@ class RequestConverterSpec extends Specification {
     @Unroll
     def "creates date intervals correctly"() {
         given: "a date"
-        def date = parseDate("2020-11-26")
+        def date = parseDate("2020-10-10")
 
         when: "a date interval is created"
         DateInterval interval = converter.createDateIntervalFrom(timeRange, date)
 
         then: "the start date is correct"
         interval.start() == start
-        interval.end() == "2020-11-26"
+        interval.end() == "2020-10-10"
 
         where:
-        timeRange                 | start
-        TimeRange.LAST_SIX_MONTHS | "2020-05-26"
-        TimeRange.LAST_MONTH      | "2020-10-26"
-        TimeRange.LAST_WEEK       | "2020-11-19"
-        TimeRange.YESTERDAY       | "2020-11-25"
+        timeRange               | start
+        TimeRange.LAST_6_MONTHS | "2020-04-10"
+        TimeRange.LAST_30_DAYS  | "2020-09-10"
+        TimeRange.LAST_7_DAYS   | "2020-10-03"
+        TimeRange.YESTERDAY     | "2020-10-09"
     }
 
     private static LocalDate parseDate(String date) {
