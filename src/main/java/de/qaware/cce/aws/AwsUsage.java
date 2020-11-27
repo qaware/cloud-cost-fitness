@@ -1,7 +1,18 @@
+/*
+   ________                __   ______           __     ______            _                      _
+  / ____/ /___  __  ______/ /  / ____/___  _____/ /_   / ____/___  ____ _(_)___  ___  ___  _____(_)___  ____ _
+ / /   / / __ \/ / / / __  /  / /   / __ \/ ___/ __/  / __/ / __ \/ __ `/ / __ \/ _ \/ _ \/ ___/ / __ \/ __ `/
+/ /___/ / /_/ / /_/ / /_/ /  / /___/ /_/ (__  ) /_   / /___/ / / / /_/ / / / / /  __/  __/ /  / / / / / /_/ /
+\____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
+                                                                /____/                               /____/
+ */
 package de.qaware.cce.aws;
 
 import de.qaware.cce.Usage;
 
+/**
+ * Usage fields for the AWS API
+ */
 public enum AwsUsage implements Usage {
     DYNAMO_DB_TRANSFER_INTERNET_IN("DDB: Data Transfer - Internet (IN)"),
     DYNAMO_DB_TRANSFER_INTERNET_OUT("DDB: Data Transfer - Internet (Out)"),

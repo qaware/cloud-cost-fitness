@@ -1,12 +1,20 @@
+/*
+   ________                __   ______           __     ______            _                      _
+  / ____/ /___  __  ______/ /  / ____/___  _____/ /_   / ____/___  ____ _(_)___  ___  ___  _____(_)___  ____ _
+ / /   / / __ \/ / / / __  /  / /   / __ \/ ___/ __/  / __/ / __ \/ __ `/ / __ \/ _ \/ _ \/ ___/ / __ \/ __ `/
+/ /___/ / /_/ / /_/ / /_/ /  / /___/ /_/ (__  ) /_   / /___/ / / / /_/ / / / / /  __/  __/ /  / / / / / /_/ /
+\____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
+                                                                /____/                               /____/
+ */
 package de.qaware.cce.aws.converter
 
 import de.qaware.cce.TimeRange
+import de.qaware.cce.ValueWithUnit
 import software.amazon.awssdk.services.costexplorer.model.DateInterval
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class RequestConverterSpec extends Specification {
     RequestConverter converter = new RequestConverter()
@@ -32,6 +40,6 @@ class RequestConverterSpec extends Specification {
     }
 
     private static LocalDate parseDate(String date) {
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER);
     }
 }

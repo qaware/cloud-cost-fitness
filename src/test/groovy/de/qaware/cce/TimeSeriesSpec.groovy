@@ -1,10 +1,17 @@
+/*
+   ________                __   ______           __     ______            _                      _
+  / ____/ /___  __  ______/ /  / ____/___  _____/ /_   / ____/___  ____ _(_)___  ___  ___  _____(_)___  ____ _
+ / /   / / __ \/ / / / __  /  / /   / __ \/ ___/ __/  / __/ / __ \/ __ `/ / __ \/ _ \/ _ \/ ___/ / __ \/ __ `/
+/ /___/ / /_/ / /_/ / /_/ /  / /___/ /_/ (__  ) /_   / /___/ / / / /_/ / / / / /  __/  __/ /  / / / / / /_/ /
+\____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
+                                                                /____/                               /____/
+ */
 package de.qaware.cce
 
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class TimeSeriesSpec extends Specification {
     TimeSeries elements
@@ -158,6 +165,6 @@ class TimeSeriesSpec extends Specification {
     }
 
     LocalDate getDate(String date) {
-        LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER)
     }
 }

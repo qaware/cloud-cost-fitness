@@ -1,10 +1,16 @@
+/*
+   ________                __   ______           __     ______            _                      _
+  / ____/ /___  __  ______/ /  / ____/___  _____/ /_   / ____/___  ____ _(_)___  ___  ___  _____(_)___  ____ _
+ / /   / / __ \/ / / / __  /  / /   / __ \/ ___/ __/  / __/ / __ \/ __ `/ / __ \/ _ \/ _ \/ ___/ / __ \/ __ `/
+/ /___/ / /_/ / /_/ / /_/ /  / /___/ /_/ (__  ) /_   / /___/ / / / /_/ / / / / /  __/  __/ /  / / / / / /_/ /
+\____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
+                                                                /____/                               /____/
+ */
 package de.qaware.cce
-
 
 import spock.lang.Specification
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 import static de.qaware.cce.CloudProvider.AMAZON_AWS
 import static de.qaware.cce.TimeRange.*
@@ -24,7 +30,7 @@ class CloudCostFitness extends Specification {
 
     def "checks the extrapolated costs"() {
         given: "a day next month"
-        def day = LocalDate.now().plusDays(30).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        def day = LocalDate.now().plusDays(30).format(ValueWithUnit.DATE_FORMATTER)
 
         expect: "the extrapolated total costs to be less than a limit"
         costExplorer.during(LAST_MONTH).getCosts().extrapolate(day).lessThan(100.0)
@@ -81,6 +87,6 @@ class CloudCostFitness extends Specification {
         TimeSeries ignite2 = costExplorer.during(YESTERDAY).forInstance("pair-int-ignite-1").getUsage(EC2_RUNNING_HOURS)
 
         then: "the average uptime is long enough"
-        !ignite1.add(ignite2).max().lessThan(48.0)
+        !ignite1.add(ignite2).min().lessThan(48.0)
     }
 }

@@ -1,3 +1,11 @@
+/*
+   ________                __   ______           __     ______            _                      _
+  / ____/ /___  __  ______/ /  / ____/___  _____/ /_   / ____/___  ____ _(_)___  ___  ___  _____(_)___  ____ _
+ / /   / / __ \/ / / / __  /  / /   / __ \/ ___/ __/  / __/ / __ \/ __ `/ / __ \/ _ \/ _ \/ ___/ / __ \/ __ `/
+/ /___/ / /_/ / /_/ / /_/ /  / /___/ /_/ (__  ) /_   / /___/ / / / /_/ / / / / /  __/  __/ /  / / / / / /_/ /
+\____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
+                                                                /____/                               /____/
+ */
 package de.qaware.cce;
 
 
@@ -12,7 +20,7 @@ import java.util.Objects;
  */
 public class ValueWithUnit implements Comparable<ValueWithUnit> {
     private static final int NUMBER_DIGITS_CURRENCY = 2;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private LocalDate dateFrom;
     private LocalDate dateTo;
@@ -188,9 +196,9 @@ public class ValueWithUnit implements Comparable<ValueWithUnit> {
         }
 
         if (dateFrom == dateTo) {
-            return dateFrom.format(FORMATTER) + " : " + valueToString();
+            return dateFrom.format(DATE_FORMATTER) + " : " + valueToString();
         }
-        return dateFrom.format(FORMATTER) + " to " + dateTo.format(FORMATTER) + " : " + valueToString();
+        return dateFrom.format(DATE_FORMATTER) + " to " + dateTo.format(DATE_FORMATTER) + " : " + valueToString();
     }
 
     private String valueToString() {
