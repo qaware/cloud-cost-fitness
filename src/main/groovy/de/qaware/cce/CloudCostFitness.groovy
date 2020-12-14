@@ -25,7 +25,7 @@ class CloudCostFitness extends Specification {
 
     def "checks the total costs"() {
         expect: "the total costs to be less than a limit"
-        costExplorer.during(YESTERDAY).getCosts().sum().lessThan(50.0)
+        costExplorer.during(YESTERDAY).getCosts().sum().lessThan(100.0)
     }
 
     def "checks the extrapolated costs"() {
@@ -33,7 +33,7 @@ class CloudCostFitness extends Specification {
         def day = LocalDate.now().plusDays(30).format(ValueWithUnit.DATE_FORMATTER)
 
         expect: "the extrapolated total costs to be less than a limit"
-        costExplorer.during(LAST_30_DAYS).getCosts().extrapolate(day).lessThan(100.0)
+        costExplorer.during(LAST_30_DAYS).getCosts().extrapolate(day).lessThan(200.0)
     }
 
     def "checks that the most expensive day is the first day of the month"() {
@@ -50,7 +50,7 @@ class CloudCostFitness extends Specification {
 
         and: "the costs are fetched for each of them"
         def costs = [:]
-        instances.forEach() {instance ->
+        instances.forEach() { instance ->
             costs[instance] = costExplorer.forInstance(instance).during(LAST_30_DAYS).getCosts().sum()
         }
 
@@ -66,8 +66,8 @@ class CloudCostFitness extends Specification {
         def services = costExplorer.forService("Amazon Elastic *").getNames()
 
         then: "their costs are less than a limit"
-        services.each {service ->
-            assert costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum().lessThan(200.0)
+        services.each { service ->
+            assert costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum().lessThan(250.0)
         }
     }
 
