@@ -1,0 +1,41 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "tag:GetResources",
+        "ec2:DescribeInstanceAttribute",
+        "tag:GetTagValues",
+        "ce:GetCostAndUsage",
+        "aws-portal:ViewUsage",
+        "ec2:DescribeSnapshots",
+        "ce:GetReservationPurchaseRecommendation",
+        "tag:GetTagKeys",
+        "aws-portal:ViewPaymentMethods",
+        "ce:GetReservationUtilization",
+        "ce:GetSavingsPlansPurchaseRecommendation",
+        "ce:GetDimensionValues",
+        "ce:GetSavingsPlansUtilizationDetails",
+        "aws-portal:ViewBilling",
+        "ce:GetReservationCoverage",
+        "ce:GetUsageForecast",
+        "ce:DescribeCostCategoryDefinition",
+        "ce:GetRightsizingRecommendation",
+        "ec2:DescribeTags",
+        "aws-portal:ViewAccount",
+        "ce:GetSavingsPlansUtilization",
+        "ce:ListCostCategoryDefinitions",
+        "ce:GetCostForecast",
+        "ec2:DescribeHosts",
+        "ce:GetCostAndUsageWithResources",
+        "ce:GetSavingsPlansCoverage",
+        "cur:DescribeReportDefinitions",
+        "ce:GetTags"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
