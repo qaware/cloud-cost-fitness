@@ -14,6 +14,7 @@ import spock.lang.Requires
 import java.time.LocalDate
 
 import de.qaware.cloud.CloudProvider
+import static de.qaware.cloud.TimeRange.*
 import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
 
 @Requires({ sys['aws.access.key'] && sys['aws.secret.key'] })
