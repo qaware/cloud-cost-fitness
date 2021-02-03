@@ -8,32 +8,24 @@
  */
 package de.qaware.cloud;
 
-import de.qaware.cloud.aws.AwsCostExplorer;
+import java.util.ServiceLoader;
 
 /**
- * The cloud provider
+ * The cloud provider enum used to get CostExplorer instances.
  */
 public enum CloudProvider {
-    AMAZON_AWS {
-        public CostExplorer getCostExplorer() {
-            return new AwsCostExplorer();
-        }
-    },
-    GOOGLE_CLOUD {
-        public CostExplorer getCostExplorer() {
-            throw new UnsupportedOperationException("Not yet implemented");
-        }
-    },
-    MICROSOFT_AZURE {
-        public CostExplorer getCostExplorer() {
-            throw new UnsupportedOperationException("Not yet implemented");
-        }
-    };
+    AMAZON_AWS, GOOGLE_CLOUD, MICROSOFT_AZURE;
 
     /**
      * Return a new CostExplorer instance.
      * 
      * @return a cost explorer
+     * @throws UnsupportedOperationException if no cost explorer could be found
      */
-    public abstract CostExplorer getCostExplorer();
+    public CostExplorer getCostExplorer() {
+        ServiceLoader<CostExplorer> loader = ServiceLoader.load(CostExplorer.class);
+        
+        // this here only allows one implementation on the classpath
+        return loader.findFirst().orElseThrow(UnsupportedOperationException::new);
+    }
 }
