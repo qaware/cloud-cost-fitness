@@ -10,8 +10,6 @@ package de.qaware.cloud;
 
 import java.util.List;
 
-import de.qaware.cloud.aws.AwsCostExplorer;
-
 /**
  * Representation of a Cost Explorer
  */
