@@ -9,12 +9,14 @@
 package de.qaware.cloud
 
 import spock.lang.Specification
+import spock.lang.Requires
 
 import java.time.LocalDate
 
 import de.qaware.cloud.CloudProvider
 import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
 
+@Requires({ sys['aws.access.key'] && sys['aws.secret.key'] })
 class CloudCostFitness extends Specification {
     CostExplorer costExplorer
 
