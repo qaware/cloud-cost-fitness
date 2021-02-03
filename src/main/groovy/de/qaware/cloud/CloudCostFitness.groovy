@@ -13,6 +13,7 @@ import spock.lang.Specification
 import java.time.LocalDate
 
 import de.qaware.cloud.CloudProvider
+import static de.qaware.cloud.TimeRange.*
 import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
 
 class CloudCostFitness extends Specification {
