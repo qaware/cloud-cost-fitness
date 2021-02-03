@@ -1,6 +1,8 @@
 plugins {
     id 'java-library'
     id 'groovy'
+
+    id "com.github.hierynomus.license" version "0.15.0"
 }
 
 java {
@@ -24,3 +26,12 @@ dependencies {
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.4'
 }
 
+license {
+    header = project.file('HEADER') 
+    strictCheck = true
+    includes(["**/*.java", "**/*.groovy"])
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        groovy = 'SLASHSTAR_STYLE'
+    }
+}
