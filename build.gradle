@@ -3,11 +3,8 @@ plugins {
     id 'java'
 }
 
-group 'de.qaware.cloud'
-version '1.0-SNAPSHOT'
-
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
