@@ -1,5 +1,8 @@
 # Cloud Cost Fitness
 
+[![Build Status](https://github.com/qaware/cloud-cost-fitness/workflows/build/badge.svg?branch=master)](https://github.com/qaware/cloud-cost-fitness/actions?query=workflow%3A%22build%22)
+
+
 A library to express and test your cloud costs as architecture fitness functions.
 
 ## Usage
