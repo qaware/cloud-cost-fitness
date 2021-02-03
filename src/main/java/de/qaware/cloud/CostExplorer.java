@@ -64,20 +64,12 @@ public interface CostExplorer {
     TimeSeries getUsage(Usage usage);
 
     /**
-     * Creates a new CostExplorer instance for the given cloud provider
+     * Creates a new CostExplorer instance for the given cloud cost provider.
      *
      * @param provider the cloud provider
      * @return the new inctance
      */
-    static CostExplorer forProvider(CloudProvider provider) {
-        switch (provider) {
-            case AMAZON_AWS:
-                return new AwsCostExplorer();
-            case GOOGLE_CLOUD:
-            case MICROSOFT_AZURE:
-            default:
-                throw new UnsupportedOperationException("Not yet implemented");
-
-        }
+    static CostExplorer newInstance(CloudProvider provider) {
+        return provider.newInstance();
     }
 }
