@@ -110,7 +110,7 @@ public class TimeSeries {
      * @throws IllegalStateException  if the units of the elements do not match
      */
     public ValueWithUnit sum() {
-        if (elements.size() == 0) {
+        if (elements.isEmpty()) {
             throw new NoSuchElementException("Empty time series");
         } else if (elements.size() == 1) {
             return elements.get(0);
@@ -140,11 +140,11 @@ public class TimeSeries {
      *                             if the dates of the elements do not match
      */
     public TimeSeries add(TimeSeries other) {
-        if (elements.size() != other.getSize() && elements.size() > 0) {
+        if (elements.size() != other.getSize() && !elements.isEmpty()) {
             throw new ArithmeticException("Time series lengths do not match");
         }
 
-        if (elements.size() == 0) {
+        if (elements.isEmpty()) {
             return other;
         }
 
