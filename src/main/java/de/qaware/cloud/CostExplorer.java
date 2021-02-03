@@ -10,6 +10,8 @@ package de.qaware.cloud;
 
 import java.util.List;
 
+import de.qaware.cloud.aws.AwsCostExplorer;
+
 /**
  * Representation of a Cost Explorer
  */
@@ -60,4 +62,22 @@ public interface CostExplorer {
      * @return a time series containing usage
      */
     TimeSeries getUsage(Usage usage);
+
+    /**
+     * Creates a new CostExplorer instance for the given cloud provider
+     *
+     * @param provider the cloud provider
+     * @return the new inctance
+     */
+    static CostExplorer forProvider(CloudProvider provider) {
+        switch (provider) {
+            case AMAZON_AWS:
+                return new AwsCostExplorer();
+            case GOOGLE_CLOUD:
+            case MICROSOFT_AZURE:
+            default:
+                throw new UnsupportedOperationException("Not yet implemented");
+
+        }
+    }
 }

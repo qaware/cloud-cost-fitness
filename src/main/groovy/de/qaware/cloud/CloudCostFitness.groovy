@@ -19,7 +19,7 @@ class CloudCostFitness extends Specification {
     CostExplorer costExplorer
 
     def setup() {
-        costExplorer = CloudCostExplorer.forProvider(AMAZON_AWS)
+        costExplorer = CostExplorer.forProvider(AMAZON_AWS)
     }
 
     def "checks the total costs"() {
