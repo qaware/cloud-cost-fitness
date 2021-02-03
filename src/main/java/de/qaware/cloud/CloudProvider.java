@@ -15,17 +15,17 @@ import de.qaware.cloud.aws.AwsCostExplorer;
  */
 public enum CloudProvider {
     AMAZON_AWS {
-        public CostExplorer newInstance() {
+        public CostExplorer getCostExplorer() {
             return new AwsCostExplorer();
         }
     },
     GOOGLE_CLOUD {
-        public CostExplorer newInstance() {
+        public CostExplorer getCostExplorer() {
             throw new UnsupportedOperationException("Not yet implemented");
         }
     },
     MICROSOFT_AZURE {
-        public CostExplorer newInstance() {
+        public CostExplorer getCostExplorer() {
             throw new UnsupportedOperationException("Not yet implemented");
         }
     };
@@ -35,5 +35,5 @@ public enum CloudProvider {
      * 
      * @return a cost explorer
      */
-    abstract CostExplorer newInstance();
+    public abstract CostExplorer getCostExplorer();
 }

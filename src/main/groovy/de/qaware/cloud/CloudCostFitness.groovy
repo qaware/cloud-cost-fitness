@@ -12,14 +12,14 @@ import spock.lang.Specification
 
 import java.time.LocalDate
 
-import static de.qaware.cloud.CloudProvider.AMAZON_AWS
+import de.qaware.cloud.CloudProvider
 import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
 
 class CloudCostFitness extends Specification {
     CostExplorer costExplorer
 
     def setup() {
-        costExplorer = CostExplorer.newInstance(AMAZON_AWS)
+        costExplorer = CloudProvider.AMAZON_AWS.getCostExplorer()
     }
 
     def "checks the total costs"() {

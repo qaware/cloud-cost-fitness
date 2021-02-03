@@ -62,14 +62,4 @@ public interface CostExplorer {
      * @return a time series containing usage
      */
     TimeSeries getUsage(Usage usage);
-
-    /**
-     * Creates a new CostExplorer instance for the given cloud cost provider.
-     *
-     * @param provider the cloud provider
-     * @return the new inctance
-     */
-    static CostExplorer newInstance(CloudProvider provider) {
-        return provider.newInstance();
-    }
 }
