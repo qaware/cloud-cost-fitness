@@ -6,13 +6,13 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce.aws.fetcher;
+package de.qaware.cloud.aws.fetcher;
 
-import de.qaware.cce.TimeRange;
-import de.qaware.cce.TimeSeries;
-import de.qaware.cce.Usage;
-import de.qaware.cce.aws.converter.RequestConverter;
-import de.qaware.cce.aws.converter.ResponseConverter;
+import de.qaware.cloud.TimeRange;
+import de.qaware.cloud.TimeSeries;
+import de.qaware.cloud.Usage;
+import de.qaware.cloud.aws.converter.RequestConverter;
+import de.qaware.cloud.aws.converter.ResponseConverter;
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
 import software.amazon.awssdk.services.costexplorer.model.*;
 import software.amazon.awssdk.utils.StringUtils;

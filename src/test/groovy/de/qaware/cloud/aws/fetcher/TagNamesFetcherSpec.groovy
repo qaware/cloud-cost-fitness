@@ -6,9 +6,9 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce.aws.fetcher
+package de.qaware.cloud.aws.fetcher
 
-import de.qaware.cce.TimeRange
+import de.qaware.cloud.TimeRange
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient
 import software.amazon.awssdk.services.costexplorer.model.CostExplorerResponse
 import software.amazon.awssdk.services.costexplorer.model.GetTagsRequest

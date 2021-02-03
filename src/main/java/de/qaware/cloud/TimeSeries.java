@@ -6,7 +6,7 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce;
+package de.qaware.cloud;
 
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static de.qaware.cce.ValueWithUnit.DATE_FORMATTER;
+import static de.qaware.cloud.ValueWithUnit.DATE_FORMATTER;
 
 /**
  * Collection of values given at certain times

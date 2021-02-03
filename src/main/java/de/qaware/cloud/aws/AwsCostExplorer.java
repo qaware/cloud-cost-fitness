@@ -6,15 +6,15 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce.aws;
+package de.qaware.cloud.aws;
 
-import de.qaware.cce.CostExplorer;
-import de.qaware.cce.TimeRange;
-import de.qaware.cce.TimeSeries;
-import de.qaware.cce.Usage;
-import de.qaware.cce.aws.fetcher.CostAndUsageFetcher;
-import de.qaware.cce.aws.fetcher.DimensionalValuesFetcher;
-import de.qaware.cce.aws.fetcher.TagNamesFetcher;
+import de.qaware.cloud.CostExplorer;
+import de.qaware.cloud.TimeRange;
+import de.qaware.cloud.TimeSeries;
+import de.qaware.cloud.Usage;
+import de.qaware.cloud.aws.fetcher.CostAndUsageFetcher;
+import de.qaware.cloud.aws.fetcher.DimensionalValuesFetcher;
+import de.qaware.cloud.aws.fetcher.TagNamesFetcher;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;

@@ -6,10 +6,10 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce.aws.converter
+package de.qaware.cloud.aws.converter
 
-import de.qaware.cce.TimeRange
-import de.qaware.cce.ValueWithUnit
+import de.qaware.cloud.TimeRange
+import de.qaware.cloud.ValueWithUnit
 import software.amazon.awssdk.services.costexplorer.model.DateInterval
 import spock.lang.Specification
 import spock.lang.Subject

@@ -6,13 +6,14 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce;
+package de.qaware.cloud;
 
 /**
- * The cloud provider
+ * The time range of the data
  */
-public enum CloudProvider {
-    AMAZON_AWS,
-    GOOGLE_CLOUD,
-    MICROSOFT_AZURE
+public enum TimeRange {
+    LAST_6_MONTHS,
+    LAST_30_DAYS,
+    LAST_7_DAYS,
+    YESTERDAY
 }

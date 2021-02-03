@@ -6,15 +6,14 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce
+package de.qaware.cloud
 
 import spock.lang.Specification
 
 import java.time.LocalDate
 
-import static de.qaware.cce.CloudProvider.AMAZON_AWS
-import static de.qaware.cce.TimeRange.*
-import static de.qaware.cce.aws.AwsUsage.EC2_RUNNING_HOURS
+import static de.qaware.cloud.CloudProvider.AMAZON_AWS
+import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
 
 class CloudCostFitness extends Specification {
     CostExplorer costExplorer

@@ -6,10 +6,10 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce.aws.converter;
+package de.qaware.cloud.aws.converter;
 
-import de.qaware.cce.TimeSeries;
-import de.qaware.cce.ValueWithUnit;
+import de.qaware.cloud.TimeSeries;
+import de.qaware.cloud.ValueWithUnit;
 import software.amazon.awssdk.services.costexplorer.model.ResultByTime;
 
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static de.qaware.cce.ValueWithUnit.DATE_FORMATTER;
+import static de.qaware.cloud.ValueWithUnit.DATE_FORMATTER;
 
 /**
  * Converter for responses from the AWS API

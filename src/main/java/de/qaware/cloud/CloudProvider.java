@@ -6,16 +6,13 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce;
+package de.qaware.cloud;
 
 /**
- * Filter for usage
+ * The cloud provider
  */
-public interface Usage {
-    /**
-     * Convert usage field to String
-     *
-     * @return String representation of the usage
-     */
-    String toString();
+public enum CloudProvider {
+    AMAZON_AWS,
+    GOOGLE_CLOUD,
+    MICROSOFT_AZURE
 }

@@ -6,9 +6,9 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce;
+package de.qaware.cloud;
 
-import de.qaware.cce.aws.AwsCostExplorer;
+import de.qaware.cloud.aws.AwsCostExplorer;
 
 /**
  * Producer of a CostExplorer instance

@@ -6,7 +6,7 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce
+package de.qaware.cloud
 
 import spock.lang.Specification
 import spock.lang.Subject

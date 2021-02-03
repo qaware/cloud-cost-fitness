@@ -6,22 +6,23 @@
 \____/_/\____/\__,_/\__,_/   \____/\____/____/\__/  /_____/_/ /_/\__, /_/_/ /_/\___/\___/_/  /_/_/ /_/\__, /
                                                                 /____/                               /____/
  */
-package de.qaware.cce.aws.fetcher;
+package de.qaware.cloud.aws.fetcher;
 
-import de.qaware.cce.TimeRange;
-import de.qaware.cce.aws.converter.RequestConverter;
+import de.qaware.cloud.TimeRange;
+import de.qaware.cloud.aws.converter.RequestConverter;
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
-import software.amazon.awssdk.services.costexplorer.model.GetTagsRequest;
-import software.amazon.awssdk.services.costexplorer.model.GetTagsResponse;
+import software.amazon.awssdk.services.costexplorer.model.Dimension;
+import software.amazon.awssdk.services.costexplorer.model.DimensionValuesWithAttributes;
+import software.amazon.awssdk.services.costexplorer.model.GetDimensionValuesRequest;
+import software.amazon.awssdk.services.costexplorer.model.GetDimensionValuesResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Fetcher for the Tags AWS API
+ * Fetcher for the DimensionalValues AWS API
  */
-public class TagNamesFetcher {
-    private static final String TAG_NAME = "Name";
+public class DimensionalValuesFetcher {
     private final RequestConverter requestConverter = new RequestConverter();
 
     private CostExplorerClient client;
@@ -34,8 +35,8 @@ public class TagNamesFetcher {
      * @param client the cost explorer client
      * @return a new instance of the fetcher
      */
-    public static TagNamesFetcher withClient(CostExplorerClient client) {
-        TagNamesFetcher fetcher = new TagNamesFetcher();
+    public static DimensionalValuesFetcher withClient(CostExplorerClient client) {
+        DimensionalValuesFetcher fetcher = new DimensionalValuesFetcher();
         fetcher.client = client;
         return fetcher;
     }
@@ -46,7 +47,7 @@ public class TagNamesFetcher {
      * @param timeRange the time range
      * @return the current instance of the fetcher
      */
-    public TagNamesFetcher during(TimeRange timeRange) {
+    public DimensionalValuesFetcher during(TimeRange timeRange) {
         this.timeRange = timeRange;
         return this;
     }
@@ -54,30 +55,30 @@ public class TagNamesFetcher {
     /**
      * Sets a search query
      *
-     * @param query a search query for the tag
+     * @param query a search query for filtering the values
      * @return the current instance of the fetcher
      */
-    public TagNamesFetcher searchFor(String query) {
+    public DimensionalValuesFetcher searchFor(String query) {
         this.query = query;
         return this;
     }
 
     /**
-     * Fetch the tag names given the filters
+     * Fetch all services given the filters
      *
-     * @return a list of tag names
+     * @return a list of service names
      */
-    public List<String> fetch() {
-        GetTagsRequest.Builder requestBuilder = GetTagsRequest.builder()
-                .tagKey(TAG_NAME)
+    public List<String> fetchServices() {
+        GetDimensionValuesRequest.Builder requestBuilder = GetDimensionValuesRequest.builder()
+                .dimension(Dimension.SERVICE)
                 .timePeriod(requestConverter.createDateInterval(timeRange));
 
         if (query != null && query.length() > 0) {
             requestBuilder.searchString(query);
         }
 
-        GetTagsResponse response = client.getTags(requestBuilder.build());
+        GetDimensionValuesResponse response = client.getDimensionValues(requestBuilder.build());
 
-        return response.tags().stream().filter(tag -> !tag.isBlank()).collect(Collectors.toList());
+        return response.dimensionValues().stream().map(DimensionValuesWithAttributes::value).collect(Collectors.toList());
     }
 }
