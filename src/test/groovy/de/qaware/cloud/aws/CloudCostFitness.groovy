@@ -13,14 +13,17 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud
+package de.qaware.cloud.aws
 
-import spock.lang.Specification
+import de.qaware.cloud.CloudProvider
+import de.qaware.cloud.CostExplorer
+import de.qaware.cloud.TimeSeries
+import de.qaware.cloud.ValueWithUnit
 import spock.lang.Requires
+import spock.lang.Specification
 
 import java.time.LocalDate
 
-import de.qaware.cloud.CloudProvider
 import static de.qaware.cloud.TimeRange.*
 import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
 
