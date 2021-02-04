@@ -15,10 +15,7 @@
  */
 package de.qaware.cloud.cost.aws;
 
-import de.qaware.cloud.cost.CostExplorer;
-import de.qaware.cloud.cost.TimeRange;
-import de.qaware.cloud.cost.TimeSeries;
-import de.qaware.cloud.cost.Usage;
+import de.qaware.cloud.cost.*;
 import de.qaware.cloud.cost.aws.fetcher.CostAndUsageFetcher;
 import de.qaware.cloud.cost.aws.fetcher.DimensionalValuesFetcher;
 import de.qaware.cloud.cost.aws.fetcher.TagNamesFetcher;
@@ -144,9 +141,9 @@ public class AwsCostExplorer implements CostExplorer {
 
     private TimeSeries getInstanceCosts() {
         List<String> tagNames = TagNamesFetcher.withClient(costExplorerClient)
-                    .searchFor(instance)
-                    .during(timeRange)
-                    .fetch();
+                .searchFor(instance)
+                .during(timeRange)
+                .fetch();
 
         TimeSeries timeSeries = new TimeSeries();
 
@@ -167,5 +164,10 @@ public class AwsCostExplorer implements CostExplorer {
                 .filterByUsage(usage)
                 .during(timeRange)
                 .fetchUsage();
+    }
+
+    @Override
+    public boolean supports(CloudProvider cloudProvider) {
+        return CloudProvider.AMAZON_AWS.equals(cloudProvider);
     }
 }

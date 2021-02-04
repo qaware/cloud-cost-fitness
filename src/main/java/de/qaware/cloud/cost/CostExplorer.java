@@ -68,4 +68,12 @@ public interface CostExplorer {
      * @return a time series containing usage
      */
     TimeSeries getUsage(Usage usage);
+
+    /**
+     * Determine if Cost explorer supports given cloud provider.
+     *
+     * @param cloudProvider the {@link CloudProvider} to check
+     * @return true if supported, otherwise false
+     */
+    boolean supports(CloudProvider cloudProvider);
 }

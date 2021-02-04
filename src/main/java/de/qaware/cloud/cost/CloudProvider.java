@@ -31,8 +31,10 @@ public enum CloudProvider {
      */
     public CostExplorer getCostExplorer() {
         ServiceLoader<CostExplorer> loader = ServiceLoader.load(CostExplorer.class);
-        
-        // this here only allows one implementation on the classpath
-        return loader.findFirst().orElseThrow(UnsupportedOperationException::new);
+
+        // this here only allows one matching implementation on the classpath
+        return loader.findFirst()
+                .filter(costExplorer -> costExplorer.supports(this))
+                .orElseThrow(UnsupportedOperationException::new);
     }
 }
