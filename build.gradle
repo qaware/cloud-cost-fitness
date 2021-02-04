@@ -40,11 +40,17 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // required to run JUnit 5 cloud cost fitness test
+    // testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // required for running Spock and JUnit 5
+    // testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.0'
 }
 
 test {
-    useJUnitPlatform()
+    // enable for JUnit 5 support
+    // useJUnitPlatform()
     finalizedBy jacocoTestReport
 }
 
