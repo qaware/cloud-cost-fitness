@@ -19,18 +19,16 @@ import de.qaware.cloud.cost.CloudProvider
 import de.qaware.cloud.cost.CostExplorer
 import de.qaware.cloud.cost.TimeSeries
 import de.qaware.cloud.cost.ValueWithUnit
-import spock.lang.Specification
 import spock.lang.Requires
+import spock.lang.Specification
 
 import java.time.LocalDate
 
+import static de.qaware.cloud.cost.TimeRange.*
 import static de.qaware.cloud.cost.aws.AwsUsage.EC2_RUNNING_HOURS
-import static de.qaware.cloud.cost.TimeRange.YESTERDAY
-import static de.qaware.cloud.cost.TimeRange.LAST_30_DAYS
-import static de.qaware.cloud.cost.TimeRange.LAST_7_DAYS
 
 @Requires({ sys['aws.access.key'] && sys['aws.secret.key'] })
-class CloudCostFitness extends Specification {
+class CloudCostFitnessSpec extends Specification {
     CostExplorer costExplorer
 
     def setup() {
