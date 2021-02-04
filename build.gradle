@@ -5,6 +5,9 @@ plugins {
 
     id "com.github.hierynomus.license" version "0.15.0"
     id "org.sonarqube" version "3.1.1"
+    
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.8.4"
 }
 
 sonarqube {
@@ -22,7 +25,7 @@ java {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -57,5 +60,108 @@ license {
     mapping {
         java = 'SLASHSTAR_STYLE'
         groovy = 'SLASHSTAR_STYLE'
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/qaware/cloud-cost-fitness")
+            credentials {
+                username = 'lreimer'
+                password = project.findProperty("gpr.token") ?: System.getenv("GPR_TOKEN")
+            }
+        }
+    }
+    publications {
+        library(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'Cloud Cost Fitness'
+                description = 'A library to express and test your cloud costs as architecture fitness functions.'
+                url = "${project.websiteUrl}"
+                inceptionYear = "2021"
+                licenses {
+                    license {
+                        name = 'Apache License v2'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0'
+                        distribution = 'repo'
+                    }
+                }
+                organization {
+                    name = 'QAware GmbH'
+                    url = 'https://www.qaware.de'
+                }
+                developers {
+                    developer {
+                        id = 'tmelson'
+                        name = 'Tobias Melson'
+                        email = 'tobias.melson@qaware.de'
+                    }
+                    developer {
+                        id = 'lreimer'
+                        name = 'Mario-Leander Reimer'
+                        email = 'mario-leander.reimer@qaware.de'
+                    }
+                }
+                issueManagement {
+                    system = 'GitHub'
+                    url = "${project.issueTrackerUrl}"
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/qaware/cloud-cost-fitness.git'
+                    developerConnection = 'scm:git:https://github.com/qaware/cloud-cost-fitness.git'
+                    url = 'http://github.com/qaware/cloud-cost-fitness'
+                }
+            }
+
+            groupId = "${project.group}"
+            artifactId = "${project.name}"
+            version = "${project.version}"
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUsername') ? project.bintrayUsername : System.getenv('BINTRAY_USERNAME')
+    key = project.hasProperty('bintrayApiKey') ? project.bintrayApiKey : System.getenv('BINTRAY_API_KEY')
+    publications = ['library']
+    dryRun = false
+    publish = true
+    pkg {
+        repo = project.bintrayRepo
+        name = project.name
+        desc = project.description
+        licenses = ['Apache-2.0']
+        labels = ['java', 'cloud', 'cost', 'devops', 'aws', 'gcp', 'azure']
+        websiteUrl = project.websiteUrl
+        issueTrackerUrl = project.issueTrackerUrl
+        vcsUrl = project.scmUrl
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+            desc = project.description
+            released = new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
+            vcsTag = "v${project.version}"
+        }
     }
 }
