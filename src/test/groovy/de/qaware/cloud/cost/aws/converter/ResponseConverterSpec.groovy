@@ -13,9 +13,9 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud.aws.converter
+package de.qaware.cloud.cost.aws.converter
 
-import de.qaware.cloud.ValueWithUnit
+import de.qaware.cloud.cost.ValueWithUnit
 import software.amazon.awssdk.services.costexplorer.model.DateInterval
 import software.amazon.awssdk.services.costexplorer.model.MetricValue
 import software.amazon.awssdk.services.costexplorer.model.ResultByTime

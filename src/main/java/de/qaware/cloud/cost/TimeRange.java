@@ -13,16 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud;
+package de.qaware.cloud.cost;
 
 /**
- * Filter for usage
+ * The time range of the data
  */
-public interface Usage {
-    /**
-     * Convert usage field to String
-     *
-     * @return String representation of the usage
-     */
-    String toString();
+public enum TimeRange {
+    LAST_6_MONTHS,
+    LAST_30_DAYS,
+    LAST_7_DAYS,
+    YESTERDAY
 }

@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud;
+package de.qaware.cloud.cost;
 
 import java.util.List;
 

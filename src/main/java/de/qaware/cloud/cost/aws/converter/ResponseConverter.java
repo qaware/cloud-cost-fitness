@@ -13,18 +13,16 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud.aws.converter;
+package de.qaware.cloud.cost.aws.converter;
 
-import de.qaware.cloud.TimeSeries;
-import de.qaware.cloud.ValueWithUnit;
+import de.qaware.cloud.cost.TimeSeries;
+import de.qaware.cloud.cost.ValueWithUnit;
 import software.amazon.awssdk.services.costexplorer.model.ResultByTime;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static de.qaware.cloud.ValueWithUnit.DATE_FORMATTER;
 
 /**
  * Converter for responses from the AWS API
@@ -49,7 +47,7 @@ public class ResponseConverter {
 
     private LocalDate convertStringToDate(String date) {
         try {
-            return LocalDate.parse(date, DATE_FORMATTER);
+            return LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new IllegalStateException("Failed to convert date string to timestamp", e);
         }

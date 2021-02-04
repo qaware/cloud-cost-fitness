@@ -13,15 +13,15 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud.aws;
+package de.qaware.cloud.cost.aws;
 
-import de.qaware.cloud.CostExplorer;
-import de.qaware.cloud.TimeRange;
-import de.qaware.cloud.TimeSeries;
-import de.qaware.cloud.Usage;
-import de.qaware.cloud.aws.fetcher.CostAndUsageFetcher;
-import de.qaware.cloud.aws.fetcher.DimensionalValuesFetcher;
-import de.qaware.cloud.aws.fetcher.TagNamesFetcher;
+import de.qaware.cloud.cost.CostExplorer;
+import de.qaware.cloud.cost.TimeRange;
+import de.qaware.cloud.cost.TimeSeries;
+import de.qaware.cloud.cost.Usage;
+import de.qaware.cloud.cost.aws.fetcher.CostAndUsageFetcher;
+import de.qaware.cloud.cost.aws.fetcher.DimensionalValuesFetcher;
+import de.qaware.cloud.cost.aws.fetcher.TagNamesFetcher;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;

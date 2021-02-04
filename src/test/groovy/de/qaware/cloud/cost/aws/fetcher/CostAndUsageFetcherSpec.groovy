@@ -13,10 +13,10 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud.aws.fetcher
+package de.qaware.cloud.cost.aws.fetcher
 
-import de.qaware.cloud.TimeRange
-import de.qaware.cloud.aws.AwsUsage
+import de.qaware.cloud.cost.TimeRange
+import de.qaware.cloud.cost.aws.AwsUsage
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient
 import software.amazon.awssdk.services.costexplorer.model.*
 import spock.lang.Specification

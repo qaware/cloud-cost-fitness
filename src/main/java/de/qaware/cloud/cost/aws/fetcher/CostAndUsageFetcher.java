@@ -13,13 +13,13 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud.aws.fetcher;
+package de.qaware.cloud.cost.aws.fetcher;
 
-import de.qaware.cloud.TimeRange;
-import de.qaware.cloud.TimeSeries;
-import de.qaware.cloud.Usage;
-import de.qaware.cloud.aws.converter.RequestConverter;
-import de.qaware.cloud.aws.converter.ResponseConverter;
+import de.qaware.cloud.cost.TimeRange;
+import de.qaware.cloud.cost.TimeSeries;
+import de.qaware.cloud.cost.Usage;
+import de.qaware.cloud.cost.aws.converter.RequestConverter;
+import de.qaware.cloud.cost.aws.converter.ResponseConverter;
 import software.amazon.awssdk.services.costexplorer.CostExplorerClient;
 import software.amazon.awssdk.services.costexplorer.model.*;
 import software.amazon.awssdk.utils.StringUtils;

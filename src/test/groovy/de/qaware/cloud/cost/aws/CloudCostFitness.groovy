@@ -13,19 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud.aws
+package de.qaware.cloud.cost.aws
 
-import de.qaware.cloud.CloudProvider
-import de.qaware.cloud.CostExplorer
-import de.qaware.cloud.TimeSeries
-import de.qaware.cloud.ValueWithUnit
-import spock.lang.Requires
+import de.qaware.cloud.cost.CloudProvider
+import de.qaware.cloud.cost.CostExplorer
+import de.qaware.cloud.cost.TimeSeries
+import de.qaware.cloud.cost.ValueWithUnit
 import spock.lang.Specification
+import spock.lang.Requires
 
 import java.time.LocalDate
 
-import static de.qaware.cloud.TimeRange.*
-import static de.qaware.cloud.aws.AwsUsage.EC2_RUNNING_HOURS
+import static de.qaware.cloud.cost.aws.AwsUsage.EC2_RUNNING_HOURS
+import static de.qaware.cloud.cost.TimeRange.YESTERDAY
+import static de.qaware.cloud.cost.TimeRange.LAST_30_DAYS
+import static de.qaware.cloud.cost.TimeRange.LAST_7_DAYS
 
 @Requires({ sys['aws.access.key'] && sys['aws.secret.key'] })
 class CloudCostFitness extends Specification {

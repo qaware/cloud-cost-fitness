@@ -13,14 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud
+package de.qaware.cloud.cost
 
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import java.time.LocalDate
 
-import static de.qaware.cloud.ValueWithUnit.DATE_FORMATTER
+import static de.qaware.cloud.cost.ValueWithUnit.DATE_FORMATTER
 
 class ValueWithUnitSpec extends Specification {
     def "compares values correctly"() {

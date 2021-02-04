@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package de.qaware.cloud;
+package de.qaware.cloud.cost;
 
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static de.qaware.cloud.ValueWithUnit.DATE_FORMATTER;
 
 /**
  * Collection of values given at certain times
@@ -179,7 +177,7 @@ public class TimeSeries {
 
         double[] coefficients = fitter.fit(points);
 
-        LocalDate localDate = LocalDate.parse(date, DATE_FORMATTER);
+        LocalDate localDate = LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER);
         double extrapolated = coefficients[0] + coefficients[1] * convertDateToDataPoint(localDate);
         return new ValueWithUnit(localDate, extrapolated, elements.get(0).getUnit());
     }
