@@ -59,7 +59,7 @@ class CloudCostFitnessTest {
     @Test
     void checkTheMostExpensiveDay() {
         TimeSeries costs = costExplorer.during(LAST_30_DAYS).getCosts();
-        assertEquals(costs.max().getDate().getDayOfMonth(), 1);
+        assertEquals(1, costs.max().getDate().getDayOfMonth());
     }
 
     static List<String> serviceNameFactory() {
