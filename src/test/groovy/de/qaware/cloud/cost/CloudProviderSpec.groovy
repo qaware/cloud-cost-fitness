@@ -19,6 +19,7 @@ import spock.lang.Specification
 
 class CloudProviderSpec extends Specification {
 
+
     def "Get AWS cost explorer"() {
         setup:
         System.setProperty("aws.access.key", "test")
@@ -26,6 +27,10 @@ class CloudProviderSpec extends Specification {
 
         expect:
         CloudProvider.AMAZON_AWS.costExplorer
+
+        cleanup:
+        System.setProperty("aws.access.key", "")
+        System.setProperty("aws.secret.key", "")
     }
 
     def "Get Google cost explorer"() {
@@ -33,7 +38,7 @@ class CloudProviderSpec extends Specification {
         CloudProvider.GOOGLE_CLOUD.getCostExplorer()
 
         then:
-        thrown(UnsupportedOperationException)
+        thrown(ServiceConfigurationError)
     }
 
     def "Get Azure cost explorer"() {
@@ -41,7 +46,7 @@ class CloudProviderSpec extends Specification {
         CloudProvider.MICROSOFT_AZURE.getCostExplorer()
 
         then:
-        thrown(UnsupportedOperationException)
+        thrown(ServiceConfigurationError)
     }
 
     def "Supported Cloud Providers"() {
