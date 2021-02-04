@@ -39,40 +39,61 @@ public class AwsCostExplorer implements CostExplorer {
     private String instance;
     private String service;
 
+    /**
+     * Construct default AWS cost explorer from system properties aws.access.key and aws.secret.key
+     */
     public AwsCostExplorer() {
-        initCostExplorerClient(System.getProperty("aws.access.key"), System.getProperty("aws.secret.key"));
+        this(System.getProperty("aws.access.key"), System.getProperty("aws.secret.key"));
     }
 
+    /**
+     * Construct AWS cost explorer from explicit access key and secret key.
+     *
+     * @param accessKey the AWS access key
+     * @param secretKey the AWS secret key
+     */
     public AwsCostExplorer(String accessKey, String secretKey) {
-        initCostExplorerClient(accessKey, secretKey);
+        this(createCostExplorerClient(accessKey, secretKey));
     }
 
-    private void initCostExplorerClient(String accessKey, String secretKey) {
-        AwsCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+    /**
+     * Construct AWS cost explorer from given AWS cost explorer client.
+     *
+     * @param costExplorerClient the AWS cost explorer client instance
+     */
+    AwsCostExplorer(CostExplorerClient costExplorerClient) {
+        this.costExplorerClient = costExplorerClient;
+    }
 
+    private static CostExplorerClient createCostExplorerClient(String accessKey, String secretKey) {
+        AwsCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);
         StaticCredentialsProvider credentialProvider = StaticCredentialsProvider.create(awsCredentials);
 
-        costExplorerClient = CostExplorerClient.builder()
+        return CostExplorerClient.builder()
                 .region(Region.US_EAST_1)
                 .credentialsProvider(credentialProvider)
                 .build();
     }
 
+    @Override
     public AwsCostExplorer during(TimeRange timeRange) {
         this.timeRange = timeRange;
         return this;
     }
 
+    @Override
     public AwsCostExplorer forInstance(String instance) {
         this.instance = instance;
         return this;
     }
 
+    @Override
     public AwsCostExplorer forService(String service) {
         this.service = service;
         return this;
     }
 
+    @Override
     public List<String> getNames() {
         if (instance != null) {
             return getInstances();
@@ -97,6 +118,7 @@ public class AwsCostExplorer implements CostExplorer {
                 .fetchServices();
     }
 
+    @Override
     public TimeSeries getCosts() {
         if (instance != null) {
             return getInstanceCosts();
@@ -138,6 +160,7 @@ public class AwsCostExplorer implements CostExplorer {
         return timeSeries;
     }
 
+    @Override
     public TimeSeries getUsage(Usage usage) {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .filterByTagName(instance)
