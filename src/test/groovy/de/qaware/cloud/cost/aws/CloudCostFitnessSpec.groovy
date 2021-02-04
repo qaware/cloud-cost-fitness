@@ -75,7 +75,7 @@ class CloudCostFitnessSpec extends Specification {
 
     @Unroll
     def "check the costs of EC2 instance #service"() {
-        then: "the cost is less than a limit"
+        expect: "the cost is less than a limit"
         costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum().lessThan(250.0)
 
         where:
