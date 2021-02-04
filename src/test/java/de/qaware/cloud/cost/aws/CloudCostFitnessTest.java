@@ -22,11 +22,13 @@ import de.qaware.cloud.cost.ValueWithUnit;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import static de.qaware.cloud.cost.TimeRange.LAST_30_DAYS;
-import static de.qaware.cloud.cost.TimeRange.YESTERDAY;
+import static de.qaware.cloud.cost.TimeRange.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -60,5 +62,14 @@ class CloudCostFitnessTest {
         assertEquals(costs.max().getDate().getDayOfMonth(), 1);
     }
 
+    static List<String> serviceNameFactory() {
+        return costExplorer.forService("Amazon Elastic *").getNames();
+    }
 
+    @ParameterizedTest
+    @MethodSource("serviceNameFactory")
+    void checkTheCostsOfElasticComputeInstance(String service) {
+        ValueWithUnit sum = costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum();
+        assertTrue(sum.lessThan(250.0));
+    }
 }

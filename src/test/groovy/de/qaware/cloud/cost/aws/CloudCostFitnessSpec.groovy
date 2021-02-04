@@ -20,7 +20,9 @@ import de.qaware.cloud.cost.CostExplorer
 import de.qaware.cloud.cost.TimeSeries
 import de.qaware.cloud.cost.ValueWithUnit
 import spock.lang.Requires
+import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.time.LocalDate
 
@@ -29,11 +31,9 @@ import static de.qaware.cloud.cost.aws.AwsUsage.EC2_RUNNING_HOURS
 
 @Requires({ sys['aws.access.key'] && sys['aws.secret.key'] })
 class CloudCostFitnessSpec extends Specification {
-    CostExplorer costExplorer
 
-    def setup() {
-        costExplorer = CloudProvider.AMAZON_AWS.getCostExplorer()
-    }
+    @Shared
+    CostExplorer costExplorer = CloudProvider.AMAZON_AWS.getCostExplorer()
 
     def "checks the total costs"() {
         expect: "the total costs to be less than a limit"
@@ -73,14 +73,13 @@ class CloudCostFitnessSpec extends Specification {
         name.contains("pair-int-ignite")
     }
 
-    def "checks the costs of all EC2 instances"() {
-        when: "all services related to EC2 are fetched"
-        def services = costExplorer.forService("Amazon Elastic *").getNames()
+    @Unroll
+    def "check the costs of EC2 instance #service"() {
+        then: "the cost is less than a limit"
+        costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum().lessThan(250.0)
 
-        then: "their costs are less than a limit"
-        services.each { service ->
-            assert costExplorer.during(LAST_7_DAYS).forService(service).getCosts().sum().lessThan(250.0)
-        }
+        where:
+        service << costExplorer.forService("Amazon Elastic *").getNames()
     }
 
     def "checks the costs for ignite last week"() {
