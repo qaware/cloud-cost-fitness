@@ -64,6 +64,7 @@ public interface CostExplorer {
     /**
      * Fetch the instance usage
      *
+     * @param usage a usage filter
      * @return a time series containing usage
      */
     TimeSeries getUsage(Usage usage);
