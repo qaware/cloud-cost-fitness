@@ -101,14 +101,14 @@ public class AwsCostExplorer implements CostExplorer {
         throw new IllegalStateException("Don't know what names to fetch.");
     }
 
-    private List<String> getInstances() {
+    List<String> getInstances() {
         return TagNamesFetcher.withClient(costExplorerClient)
                 .searchFor(instance)
                 .during(timeRange)
                 .fetch();
     }
 
-    private List<String> getServices() {
+    List<String> getServices() {
         return DimensionalValuesFetcher.withClient(costExplorerClient)
                 .searchFor(service)
                 .during(timeRange)
@@ -126,20 +126,20 @@ public class AwsCostExplorer implements CostExplorer {
         return getTotalCosts();
     }
 
-    private TimeSeries getTotalCosts() {
+    TimeSeries getTotalCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .during(timeRange)
                 .fetchCost();
     }
 
-    private TimeSeries getServiceCosts() {
+    TimeSeries getServiceCosts() {
         return CostAndUsageFetcher.withClient(costExplorerClient)
                 .filterByService(service)
                 .during(timeRange)
                 .fetchCost();
     }
 
-    private TimeSeries getInstanceCosts() {
+    TimeSeries getInstanceCosts() {
         List<String> tagNames = TagNamesFetcher.withClient(costExplorerClient)
                 .searchFor(instance)
                 .during(timeRange)
