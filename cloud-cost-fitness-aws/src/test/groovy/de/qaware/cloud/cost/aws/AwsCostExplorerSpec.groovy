@@ -33,6 +33,22 @@ class AwsCostExplorerSpec extends Specification {
         costExplorer = Spy(new AwsCostExplorer(client))
     }
 
+    def "Check invalid default initialization"() {
+        when:
+        new AwsCostExplorer()
+
+        then:
+        thrown(NullPointerException)
+    }
+
+    def "Check invalid initialization"() {
+        when:
+        new AwsCostExplorer("", "")
+
+        then:
+        thrown(NullPointerException)
+    }
+
     def "Check during filter"() {
         expect:
         costExplorer.during(TimeRange.YESTERDAY) == costExplorer
@@ -57,8 +73,20 @@ class AwsCostExplorerSpec extends Specification {
 
     def "Check getNames for instance"() {
         given:
-        costExplorer.during(TimeRange.YESTERDAY).forInstance("test")
+        costExplorer.forInstance("test")
         costExplorer.getInstances() >> ["test"]
+
+        when:
+        def names = costExplorer.getNames()
+
+        then:
+        names.size() == 1
+    }
+
+    def "Check getNames for service"() {
+        given:
+        costExplorer.forService("test")
+        costExplorer.getServices() >> ["test"]
 
         when:
         def names = costExplorer.getNames()
@@ -69,16 +97,16 @@ class AwsCostExplorerSpec extends Specification {
 
     def "Check get costs for service"() {
         given:
-        costExplorer.during(TimeRange.YESTERDAY).forService("test")
+        costExplorer.forService("test")
         costExplorer.getServiceCosts() >> new TimeSeries()
 
         expect:
-        costExplorer.getServiceCosts()
+        costExplorer.getCosts()
     }
 
     def "Check get costs for instance"() {
         given:
-        costExplorer.during(TimeRange.YESTERDAY).forInstance("test")
+        costExplorer.forInstance("test")
         costExplorer.getInstanceCosts() >> new TimeSeries()
 
         expect:
