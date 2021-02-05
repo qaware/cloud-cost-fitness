@@ -14,16 +14,22 @@ A library to express and test your cloud costs as architecture fitness functions
 If you are using Gradle as a build tool the following dependency needs to be added to your
 project dependencies.
 ```groovy
-testImplementation 'de.qaware.cloud.cost:cloud-cost-fitness:1.0.0'
+testImplementation 'de.qaware.cloud.cost:cloud-cost-fitness-api:1.0.0'
+testRuntimeOnly 'de.qaware.cloud.cost:cloud-cost-fitness-aws:1.0.0'
 ```
 
 If you are using Maven as a build tool the following dependency needs to be added to your project dependencies.
 
 ```xml
-
 <dependency>
     <groupId>de.qaware.cloud.cost</groupId>
-    <artifactId>cloud-cost-fitness</artifactId>
+    <artifactId>cloud-cost-fitness-api</artifactId>
+    <version>1.0.0</version>
+    <type>test</type>
+</dependency>
+<dependency>
+    <groupId>de.qaware.cloud.cost</groupId>
+    <artifactId>cloud-cost-fitness-aws</artifactId>
     <version>1.0.0</version>
     <type>test</type>
 </dependency>
