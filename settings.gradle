@@ -1,2 +1,4 @@
 rootProject.name = 'cloud-cost-fitness'
 
+include 'cloud-cost-fitness-api'
+include 'cloud-cost-fitness-aws'

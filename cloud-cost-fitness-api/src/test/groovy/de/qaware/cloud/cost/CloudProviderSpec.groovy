@@ -21,16 +21,8 @@ class CloudProviderSpec extends Specification {
 
 
     def "Get AWS cost explorer"() {
-        setup:
-        System.setProperty("aws.access.key", "test")
-        System.setProperty("aws.secret.key", "test")
-
         expect:
         CloudProvider.AMAZON_AWS.costExplorer
-
-        cleanup:
-        System.setProperty("aws.access.key", "")
-        System.setProperty("aws.secret.key", "")
     }
 
     def "Get Google cost explorer"() {
@@ -38,7 +30,7 @@ class CloudProviderSpec extends Specification {
         CloudProvider.GOOGLE_CLOUD.getCostExplorer()
 
         then:
-        thrown(ServiceConfigurationError)
+        thrown(UnsupportedOperationException)
     }
 
     def "Get Azure cost explorer"() {
@@ -46,7 +38,7 @@ class CloudProviderSpec extends Specification {
         CloudProvider.MICROSOFT_AZURE.getCostExplorer()
 
         then:
-        thrown(ServiceConfigurationError)
+        thrown(UnsupportedOperationException)
     }
 
     def "Supported Cloud Providers"() {

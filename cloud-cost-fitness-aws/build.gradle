@@ -1,0 +1,77 @@
+dependencies {
+    implementation 'software.amazon.awssdk:aws-sdk-java:2.15.23'
+    implementation project(':cloud-cost-fitness-api')
+
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    runtimeOnly 'org.slf4j:slf4j-simple:1.7.30'
+
+    testImplementation 'org.apache.commons:commons-math3:3.6.1'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
+
+    // required to run JUnit 5 cloud cost fitness test
+    // testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // required for running Spock and JUnit 5
+    // testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.0'
+}
+
+test {
+    // enable for JUnit 5 support
+    // useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'Cloud Cost Fitness AWS'
+                description = 'A library to express and test your AWS cloud costs as architecture fitness functions.'
+                url = "${project.websiteUrl}"
+                inceptionYear = "2021"
+                licenses {
+                    license {
+                        name = 'Apache License v2'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0'
+                        distribution = 'repo'
+                    }
+                }
+                organization {
+                    name = 'QAware GmbH'
+                    url = 'https://www.qaware.de'
+                }
+                developers {
+                    developer {
+                        id = 'tmelson'
+                        name = 'Tobias Melson'
+                        email = 'tobias.melson@qaware.de'
+                    }
+                    developer {
+                        id = 'lreimer'
+                        name = 'Mario-Leander Reimer'
+                        email = 'mario-leander.reimer@qaware.de'
+                    }
+                }
+                issueManagement {
+                    system = 'GitHub'
+                    url = "${project.issueTrackerUrl}"
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/qaware/cloud-cost-fitness.git'
+                    developerConnection = 'scm:git:https://github.com/qaware/cloud-cost-fitness.git'
+                    url = 'http://github.com/qaware/cloud-cost-fitness'
+                }
+            }
+
+            groupId = "${project.group}"
+            artifactId = "${project.name}"
+            version = "${project.version}"
+        }
+    }
+}
