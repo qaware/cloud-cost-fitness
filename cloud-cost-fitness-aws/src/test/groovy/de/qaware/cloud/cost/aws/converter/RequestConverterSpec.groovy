@@ -28,6 +28,11 @@ class RequestConverterSpec extends Specification {
     @Subject
     RequestConverter converter = new RequestConverter()
 
+    def "create data interval from now"() {
+        expect:
+        converter.createDateInterval(TimeRange.YESTERDAY)
+    }
+
     @Unroll
     def "creates date intervals"() {
         given: "a date"
@@ -49,6 +54,6 @@ class RequestConverterSpec extends Specification {
     }
 
     private static LocalDate parseDate(String date) {
-        return LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER);
+        return LocalDate.parse(date, ValueWithUnit.DATE_FORMATTER)
     }
 }

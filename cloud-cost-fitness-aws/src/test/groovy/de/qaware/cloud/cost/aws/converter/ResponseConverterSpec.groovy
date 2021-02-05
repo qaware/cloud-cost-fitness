@@ -59,11 +59,57 @@ class ResponseConverterSpec extends Specification {
         def result = converter.extractValues(resultsByTime, "blended")
 
         then: "the dates and values are parsed correctly"
-        result.getElements()[0].getDate().format(ValueWithUnit.DATE_FORMATTER)  == "2020-08-01"
+        result.getElements()[0].getDate().format(ValueWithUnit.DATE_FORMATTER) == "2020-08-01"
         result.getElements()[0].getValue() == 10.0d
         result.getElements()[0].getUnit() == "EUR"
-        result.getElements()[1].getDate().format(ValueWithUnit.DATE_FORMATTER)  == "2020-09-01"
+        result.getElements()[1].getDate().format(ValueWithUnit.DATE_FORMATTER) == "2020-09-01"
         result.getElements()[1].getValue() == -1.0d
         result.getElements()[1].getUnit() == "USD"
+    }
+
+    def "Invalid amount"() {
+        given:
+        resultsByTime = [
+                ResultByTime.builder()
+                        .timePeriod(DateInterval.builder()
+                                .start("2020-08-01")
+                                .end("2020-08-02")
+                                .build())
+                        .total(Collections.singletonMap("blended",
+                                MetricValue.builder()
+                                        .amount("invalid")
+                                        .unit("EUR")
+                                        .build()))
+                        .build()
+        ]
+
+        when:
+        converter.extractValues(resultsByTime, "blended")
+
+        then:
+        thrown(IllegalStateException)
+    }
+
+    def "Invalid date"() {
+        given:
+        resultsByTime = [
+                ResultByTime.builder()
+                        .timePeriod(DateInterval.builder()
+                                .start("invalid")
+                                .end("invalid")
+                                .build())
+                        .total(Collections.singletonMap("blended",
+                                MetricValue.builder()
+                                        .amount("10")
+                                        .unit("EUR")
+                                        .build()))
+                        .build()
+        ]
+
+        when:
+        converter.extractValues(resultsByTime, "blended")
+
+        then:
+        thrown(IllegalStateException)
     }
 }
