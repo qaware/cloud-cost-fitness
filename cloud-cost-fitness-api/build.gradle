@@ -16,7 +16,7 @@ publishing {
                 inceptionYear = "2021"
                 licenses {
                     license {
-                        name = 'Apache License v2'
+                        name = 'The Apache License, Version 2.0'
                         url = 'http://www.apache.org/licenses/LICENSE-2.0'
                         distribution = 'repo'
                     }
@@ -42,9 +42,9 @@ publishing {
                     url = "${project.issueTrackerUrl}"
                 }
                 scm {
-                    connection = 'scm:git:https://github.com/qaware/cloud-cost-fitness.git'
-                    developerConnection = 'scm:git:https://github.com/qaware/cloud-cost-fitness.git'
-                    url = 'http://github.com/qaware/cloud-cost-fitness'
+                    connection = 'scm:git:git://github.com/qaware/cloud-cost-fitness.git'
+                    developerConnection = 'scm:git:ssh://github.com/qaware/cloud-cost-fitness.git'
+                    url = 'http://github.com/qaware/cloud-cost-fitness/tree/master'
                 }
             }
 
